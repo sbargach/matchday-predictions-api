@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-09-27
+### Added
+- Add MatchPrediction model and first PredictionsController
+
 ## [0.1.0] - 2025-09-22
 ### Added
 - Initial solution and API project (MatchdayPredictions.Api)
