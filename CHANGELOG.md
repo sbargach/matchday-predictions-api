@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-09-28
+### Added
+- Add get/post in Predictions controller
+- Add model to request an match prediction
+
 ## [0.2.0] - 2025-09-27
 ### Added
 - Add MatchPrediction model and first PredictionsController
