@@ -3,6 +3,10 @@ This project follows Keep a Changelog and Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-10-01
+### Added
+- Add first stored procedures.
+
 ## [0.1.0] - 2025-09-30
 ### Added
 - Tables: Users, Leagues, LeagueMembers
