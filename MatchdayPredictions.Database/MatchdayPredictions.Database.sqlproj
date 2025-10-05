@@ -22,6 +22,7 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DacVersion>0.0.2.0</DacVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -66,8 +67,12 @@
     <Build Include="dbo\tables\LeagueMembers.sql" />
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_CreateUser.sql" />
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_CreateLeague.sql" />
+    <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_AddUserToLeague.sql" />
+    <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_SetPrediction.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CHANGELOG.md" />
+    <None Include="dbo\tables\LeagueMatches.sql" />
+    <None Include="dbo\tables\Predictions.sql" />
   </ItemGroup>
 </Project>
