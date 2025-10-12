@@ -33,3 +33,5 @@ packages/
 # OS files
 .DS_Store
 Thumbs.db
+MatchdayPredictions.Database/MatchdayPredictions.Database.jfm
+MatchdayPredictions.Database/MatchdayPredictions.Database.dbmdl

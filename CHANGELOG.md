@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2025-10-12
+### Added
+- Added Dapper-based data context with Polly retry policy.
+
 ## [0.3.0] - 2025-09-28
 ### Added
 - Add get/post in Predictions controller

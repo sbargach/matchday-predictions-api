@@ -1,43 +1,87 @@
+using MatchdayPredictions.Api.DataAccess;
+using MatchdayPredictions.Api.DataAccess.Interfaces;
+using MatchdayPredictions.Api.Models.Configuration;
 using Serilog;
 using Serilog.Events;
 
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-    .Enrich.FromLogContext()
-    .Enrich.WithEnvironmentUserName()
-    .Enrich.WithMachineName()
-    .WriteTo.Console(
-        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext} {Message:lj}{NewLine}{Exception}")
-    .CreateLogger();
-
-try
+public class Program
 {
-    Log.Information("Starting {Application} v{Version}",
-        typeof(Program).Assembly.GetName().Name,
-        typeof(Program).Assembly.GetName().Version?.ToString());
+    public static void Main(string[] args)
+    {
+        ConfigureLogging();
 
-    var builder = WebApplication.CreateBuilder(args);
+        try
+        {
+            Log.Information("Starting {Application} v{Version}",
+                typeof(Program).Assembly.GetName().Name,
+                typeof(Program).Assembly.GetName().Version?.ToString());
 
-    builder.Host.UseSerilog();
+            var builder = WebApplication.CreateBuilder(args);
 
-    builder.Services.AddControllers();
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+            builder.Host.UseSerilog();
 
-    var app = builder.Build();
+            ConfigureServices(builder);
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
+            var app = BuildApp(builder);
 
-    app.MapControllers();
+            ConfigureMiddleware(app);
 
-    app.Run();
-}
-catch (Exception ex)
-{
-    Log.Fatal(ex, "Application start-up failed");
-}
-finally
-{
-    Log.CloseAndFlush();
+            app.Run();
+        }
+        catch (Exception ex)
+        {
+            Log.Fatal(ex, "Application start-up failed");
+        }
+        finally
+        {
+            Log.CloseAndFlush();
+        }
+    }
+
+    private static void ConfigureLogging()
+    {
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .Enrich.WithEnvironmentUserName()
+            .Enrich.WithMachineName()
+            .WriteTo.Console(
+                outputTemplate:
+                "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext} {Message:lj}{NewLine}{Exception}")
+            .CreateLogger();
+    }
+
+    
+    private static void ConfigureServices(WebApplicationBuilder builder)
+    {
+        builder.Services.Configure<MatchdayPredictionsSettings>(
+            builder.Configuration.GetSection("MatchdayPredictions"));
+
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
+        builder.Services.AddScoped<IMatchdayPredictionsDataContext, MatchdayPredictionsDataContext>();
+    }
+
+   
+    private static WebApplication BuildApp(WebApplicationBuilder builder)
+    {
+        return builder.Build();
+    }
+
+    private static void ConfigureMiddleware(WebApplication app)
+    {
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseSerilogRequestLogging();
+
+        app.UseHttpsRedirection();
+
+        app.MapControllers();
+    }
 }
