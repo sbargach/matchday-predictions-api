@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2025-10-18
+### Added
+- Added prediction repository and updated controller with real implementation.
+
 ## [0.4.0] - 2025-10-12
 ### Added
 - Added Dapper-based data context with Polly retry policy.

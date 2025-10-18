@@ -1,6 +1,8 @@
 using MatchdayPredictions.Api.DataAccess;
 using MatchdayPredictions.Api.DataAccess.Interfaces;
 using MatchdayPredictions.Api.Models.Configuration;
+using MatchdayPredictions.Api.Repositories;
+using MatchdayPredictions.Api.Repositories.Interfaces;
 using Serilog;
 using Serilog.Events;
 
@@ -62,6 +64,7 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddScoped<IMatchdayPredictionsDataContext, MatchdayPredictionsDataContext>();
+        builder.Services.AddScoped<IPredictionRepository, PredictionRepository>();
     }
 
    
