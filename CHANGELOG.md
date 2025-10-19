@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.0] - 2025-10-19
+### Added
+- Added leagues controller and integrated repository.
+
 ## [0.5.0] - 2025-10-18
 ### Added
 - Added prediction repository and updated controller with real implementation.

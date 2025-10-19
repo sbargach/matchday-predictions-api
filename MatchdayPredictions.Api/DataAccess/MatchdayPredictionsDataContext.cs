@@ -2,19 +2,15 @@
 using Dapper;
 using MatchdayPredictions.Api.DataAccess.Interfaces;
 using MatchdayPredictions.Api.Models;
+using MatchdayPredictions.Api.Models.Api;
 using MatchdayPredictions.Api.Models.Configuration;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Retry;
 
 namespace MatchdayPredictions.Api.DataAccess;
 
-/// <summary>
-/// Executes stored procedures for the MatchdayPredictions database using Dapper,
-/// with Polly retry handling and SQL exception logging.
-/// </summary>
 public class MatchdayPredictionsDataContext : IMatchdayPredictionsDataContext
 {
     private readonly string _connectionString;
@@ -29,7 +25,6 @@ public class MatchdayPredictionsDataContext : IMatchdayPredictionsDataContext
         _logger = logger;
         _connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Missing connection string.");
-
         _retryPolicy = CreateRetryPolicy(settings.Value);
     }
 
@@ -76,6 +71,47 @@ public class MatchdayPredictionsDataContext : IMatchdayPredictionsDataContext
             {
                 _logger.LogError(ex, "SQL exception executing stored procedure {Proc}",
                     "MatchDayPredictionsApi_GetPrediction");
+                throw;
+            }
+        });
+    }
+
+    public async Task<IEnumerable<League>> GetLeaguesAsync()
+    {
+        return await _retryPolicy.ExecuteAsync(async () =>
+        {
+            try
+            {
+                await using var connection = new SqlConnection(_connectionString);
+                return await connection.QueryAsync<League>(
+                    "MatchDayPredictionsApi_GetLeagues",
+                    commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError(ex, "SQL exception executing stored procedure {Proc}",
+                    "MatchDayPredictionsApi_GetLeagues");
+                throw;
+            }
+        });
+    }
+
+    public async Task<League?> GetLeagueByIdAsync(int leagueId)
+    {
+        return await _retryPolicy.ExecuteAsync(async () =>
+        {
+            try
+            {
+                await using var connection = new SqlConnection(_connectionString);
+                return await connection.QuerySingleOrDefaultAsync<League>(
+                    "MatchDayPredictionsApi_GetLeagueById",
+                    new { LeagueId = leagueId },
+                    commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError(ex, "SQL exception executing stored procedure {Proc}",
+                    "MatchDayPredictionsApi_GetLeagueById");
                 throw;
             }
         });

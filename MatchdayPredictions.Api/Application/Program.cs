@@ -1,5 +1,6 @@
 using MatchdayPredictions.Api.DataAccess;
 using MatchdayPredictions.Api.DataAccess.Interfaces;
+using MatchdayPredictions.Api.DataAccess.Repository;
 using MatchdayPredictions.Api.Models.Configuration;
 using MatchdayPredictions.Api.Repositories;
 using MatchdayPredictions.Api.Repositories.Interfaces;
@@ -65,6 +66,7 @@ public class Program
 
         builder.Services.AddScoped<IMatchdayPredictionsDataContext, MatchdayPredictionsDataContext>();
         builder.Services.AddScoped<IPredictionRepository, PredictionRepository>();
+        builder.Services.AddScoped<ILeagueRepository, LeagueRepository>();
     }
 
    
