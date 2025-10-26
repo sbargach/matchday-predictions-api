@@ -34,4 +34,17 @@ public interface IMatchdayPredictionsDataContext
     /// <param name="leagueId">The ID of the league to retrieve.</param>
     /// <returns>The league if found, otherwise null.</returns>
     Task<League?> GetLeagueByIdAsync(int leagueId);
+    /// <summary>
+    /// Executes the stored procedure to create a new user.
+    /// </summary>
+    /// <param name="request">The user details to insert into the database.</param>
+    Task CreateUserAsync(CreateUserRequest request);
+    /// <summary>
+    /// Executes the stored procedure to retrieve a user by their unique ID.
+    /// </summary>
+    /// <param name="userId">The ID of the user to retrieve.</param>
+    /// <returns>
+    /// The <see cref="User"/> object if found; otherwise, <c>null</c>.
+    /// </returns>
+    Task<User?> GetUserByIdAsync(int userId);
 }

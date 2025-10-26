@@ -67,9 +67,10 @@ public class Program
         builder.Services.AddScoped<IMatchdayPredictionsDataContext, MatchdayPredictionsDataContext>();
         builder.Services.AddScoped<IPredictionRepository, PredictionRepository>();
         builder.Services.AddScoped<ILeagueRepository, LeagueRepository>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
     }
 
-   
+
     private static WebApplication BuildApp(WebApplicationBuilder builder)
     {
         return builder.Build();

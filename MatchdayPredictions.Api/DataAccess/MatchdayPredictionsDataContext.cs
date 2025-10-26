@@ -137,4 +137,51 @@ public class MatchdayPredictionsDataContext : IMatchdayPredictionsDataContext
             delay.TotalSeconds,
             exception);
     }
+
+    public async Task CreateUserAsync(CreateUserRequest request)
+    {
+        await _retryPolicy.ExecuteAsync(async () =>
+        {
+            try
+            {
+                await using var connection = new SqlConnection(_connectionString);
+                await connection.ExecuteAsync(
+                    "MatchDayPredictionsApi_CreateUser",
+                    new
+                    {
+                        request.Username,
+                        request.Email
+                    },
+                    commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError(ex, "SQL exception executing stored procedure {Proc}",
+                    "MatchDayPredictionsApi_CreateUser");
+                throw;
+            }
+        });
+    }
+
+    public async Task<User?> GetUserByIdAsync(int userId)
+    {
+        return await _retryPolicy.ExecuteAsync(async () =>
+        {
+            try
+            {
+                await using var connection = new SqlConnection(_connectionString);
+                return await connection.QuerySingleOrDefaultAsync<User>(
+                    "MatchDayPredictionsApi_GetUserById",
+                    new { UserId = userId },
+                    commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError(ex, "SQL exception executing stored procedure {Proc}",
+                    "MatchDayPredictionsApi_GetUserById");
+                throw;
+            }
+        });
+    }
+
 }
