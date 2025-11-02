@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-## [0.6.0] - 2025-10-26
+## [0.8.0] - 2025-11-02
+### Added
+- Added JWT authentication and secured controllers with authorization.
+
+## [0.7.0] - 2025-10-26
 ### Added
 - Added users controller and integrated repository.
 

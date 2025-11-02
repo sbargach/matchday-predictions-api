@@ -1,13 +1,13 @@
-﻿using MatchdayPredictions.Api.DataAccess.Repository;
-using MatchdayPredictions.Api.Models;
-using MatchdayPredictions.Api.Models.Api;
+﻿using MatchdayPredictions.Api.Models.Api;
 using MatchdayPredictions.Api.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MatchdayPredictions.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class UsersController : ControllerBase
 {
     private readonly IUserRepository _repository;

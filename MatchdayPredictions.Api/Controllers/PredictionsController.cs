@@ -1,5 +1,6 @@
 ﻿using MatchdayPredictions.Api.Models;
 using MatchdayPredictions.Api.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MatchdayPredictions.Api.Controllers;
@@ -9,6 +10,7 @@ namespace MatchdayPredictions.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class PredictionsController : ControllerBase
 {
     private readonly IPredictionRepository _repository;

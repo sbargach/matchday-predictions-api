@@ -4,8 +4,11 @@ using MatchdayPredictions.Api.DataAccess.Repository;
 using MatchdayPredictions.Api.Models.Configuration;
 using MatchdayPredictions.Api.Repositories;
 using MatchdayPredictions.Api.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
+using System.Text;
 
 public class Program
 {
@@ -54,15 +57,19 @@ public class Program
             .CreateLogger();
     }
 
-    
     private static void ConfigureServices(WebApplicationBuilder builder)
     {
         builder.Services.Configure<MatchdayPredictionsSettings>(
             builder.Configuration.GetSection("MatchdayPredictions"));
 
+        builder.Services.Configure<JwtSettings>(
+            builder.Configuration.GetSection("Jwt"));
+
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        ConfigureJwt(builder);
 
         builder.Services.AddScoped<IMatchdayPredictionsDataContext, MatchdayPredictionsDataContext>();
         builder.Services.AddScoped<IPredictionRepository, PredictionRepository>();
@@ -70,6 +77,37 @@ public class Program
         builder.Services.AddScoped<IUserRepository, UserRepository>();
     }
 
+    private static void ConfigureJwt(WebApplicationBuilder builder)
+    {
+        var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+        if (jwtSettings == null)
+            throw new InvalidOperationException("JWT settings are missing in configuration.");
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
+
+        builder.Services
+            .AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidAudience = jwtSettings.Audience,
+                    IssuerSigningKey = key,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+        builder.Services.AddAuthorization();
+    }
 
     private static WebApplication BuildApp(WebApplicationBuilder builder)
     {
@@ -87,6 +125,9 @@ public class Program
         app.UseSerilogRequestLogging();
 
         app.UseHttpsRedirection();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.MapControllers();
     }

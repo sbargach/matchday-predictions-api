@@ -1,12 +1,14 @@
 ﻿using MatchdayPredictions.Api.DataAccess.Repository;
 using MatchdayPredictions.Api.Models;
 using MatchdayPredictions.Api.Models.Api;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MatchdayPredictions.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class LeaguesController : ControllerBase
 {
     private readonly ILeagueRepository _repository;
