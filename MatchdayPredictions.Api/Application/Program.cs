@@ -75,6 +75,7 @@ public class Program
         builder.Services.AddScoped<IPredictionRepository, PredictionRepository>();
         builder.Services.AddScoped<ILeagueRepository, LeagueRepository>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IMatchRepository, MatchRepository>();
     }
 
     private static void ConfigureJwt(WebApplicationBuilder builder)

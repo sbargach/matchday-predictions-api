@@ -184,4 +184,74 @@ public class MatchdayPredictionsDataContext : IMatchdayPredictionsDataContext
         });
     }
 
+    public async Task<Match?> GetMatchByIdAsync(int matchId)
+    {
+        return await _retryPolicy.ExecuteAsync(async () =>
+        {
+            try
+            {
+                await using var connection = new SqlConnection(_connectionString);
+                return await connection.QuerySingleOrDefaultAsync<Match>(
+                    "MatchDayPredictionsApi_GetMatchById",
+                    new { MatchId = matchId },
+                    commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError(ex, "SQL exception executing stored procedure {Proc}",
+                    "MatchDayPredictionsApi_GetMatchById");
+                throw;
+            }
+        });
+    }
+
+    public async Task<IEnumerable<Match>> GetMatchesByLeagueAsync(int leagueId)
+    {
+        return await _retryPolicy.ExecuteAsync(async () =>
+        {
+            try
+            {
+                await using var connection = new SqlConnection(_connectionString);
+                return await connection.QueryAsync<Match>(
+                    "MatchDayPredictionsApi_GetMatchesByLeague",
+                    new { LeagueId = leagueId },
+                    commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError(ex, "SQL exception executing stored procedure {Proc}",
+                    "MatchDayPredictionsApi_GetMatchesByLeague");
+                throw;
+            }
+        });
+    }
+
+    public async Task CreateMatchAsync(CreateMatchRequest request)
+    {
+        await _retryPolicy.ExecuteAsync(async () =>
+        {
+            try
+            {
+                await using var connection = new SqlConnection(_connectionString);
+                await connection.ExecuteAsync(
+                    "MatchDayPredictionsApi_CreateMatch",
+                    new
+                    {
+                        request.LeagueId,
+                        request.HomeTeam,
+                        request.AwayTeam,
+                        request.KickoffUtc
+                    },
+                    commandType: CommandType.StoredProcedure);
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError(ex, "SQL exception executing stored procedure {Proc}",
+                    "MatchDayPredictionsApi_CreateMatch");
+                throw;
+            }
+        });
+    }
+
+
 }
