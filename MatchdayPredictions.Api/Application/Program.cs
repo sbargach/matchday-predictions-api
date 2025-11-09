@@ -2,10 +2,13 @@ using MatchdayPredictions.Api.DataAccess;
 using MatchdayPredictions.Api.DataAccess.Interfaces;
 using MatchdayPredictions.Api.DataAccess.Repository;
 using MatchdayPredictions.Api.Models.Configuration;
+using MatchdayPredictions.Api.OpenTelemetry;
 using MatchdayPredictions.Api.Repositories;
 using MatchdayPredictions.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using OpenTelemetry.Metrics;
+using Prometheus;
 using Serilog;
 using Serilog.Events;
 using System.Text;
@@ -70,6 +73,7 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         ConfigureJwt(builder);
+        ConfigureOpenTelemetry(builder);
 
         builder.Services.AddScoped<IMatchdayPredictionsDataContext, MatchdayPredictionsDataContext>();
         builder.Services.AddScoped<IPredictionRepository, PredictionRepository>();
@@ -81,9 +85,6 @@ public class Program
     private static void ConfigureJwt(WebApplicationBuilder builder)
     {
         var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
-        if (jwtSettings == null)
-            throw new InvalidOperationException("JWT settings are missing in configuration.");
-
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
 
         builder.Services
@@ -110,6 +111,20 @@ public class Program
         builder.Services.AddAuthorization();
     }
 
+    private static void ConfigureOpenTelemetry(WebApplicationBuilder builder)
+    {
+        builder.Services.AddSingleton<IMetricsProvider, MetricsProvider>();
+
+        builder.Services.AddOpenTelemetry()
+            .WithMetrics(metrics =>
+            {
+                metrics.AddAspNetCoreInstrumentation();
+                metrics.AddHttpClientInstrumentation();
+                metrics.AddRuntimeInstrumentation();
+                metrics.AddMeter("MatchdayPredictions.Api");
+            });
+    }
+
     private static WebApplication BuildApp(WebApplicationBuilder builder)
     {
         return builder.Build();
@@ -125,11 +140,17 @@ public class Program
 
         app.UseSerilogRequestLogging();
 
+        app.UseRouting();
+
+        app.UseHttpMetrics();
+
         app.UseHttpsRedirection();
 
         app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
+
+        app.MapMetrics();
     }
 }

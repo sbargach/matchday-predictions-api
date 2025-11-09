@@ -3,9 +3,12 @@ using System.Security.Claims;
 using System.Text;
 using MatchdayPredictions.Api.Models.Api;
 using MatchdayPredictions.Api.Models.Configuration;
+using MatchdayPredictions.Api.OpenTelemetry;
+using MatchdayPredictions.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 
 namespace MatchdayPredictions.Api.Controllers;
 
@@ -14,48 +17,82 @@ namespace MatchdayPredictions.Api.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly JwtSettings _jwtSettings;
+    private readonly IUserRepository _userRepository;
+    private readonly IMetricsProvider _metrics;
+    private readonly ILogger<AuthController> _logger;
 
-    public AuthController(IOptions<JwtSettings> jwtOptions)
+    public AuthController(
+        IOptions<JwtSettings> jwtOptions,
+        IUserRepository userRepository,
+        IMetricsProvider metrics,
+        ILogger<AuthController> logger)
     {
         _jwtSettings = jwtOptions.Value;
+        _userRepository = userRepository;
+        _metrics = metrics;
+        _logger = logger;
     }
 
-    /// <summary>
-    /// Authenticates a user and returns a JWT token if credentials are valid.
-    /// </summary>
-    /// <param name="request">The login credentials.</param>
-    /// <returns>A JWT token if successful, otherwise 401 Unauthorized.</returns>
     [HttpPost("login")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public IActionResult Login([FromBody] LoginRequest request)
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        // TODO move validation to database
-        if (request.Username != "admin" || request.Password != "password")
-            return Unauthorized();
+        var sw = Stopwatch.StartNew();
+        _metrics.IncrementRequest();
 
-        // Simulated database UserId
-        var userId = 1;
-
-        var claims = new[]
+        try
         {
-            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-            new Claim(ClaimTypes.Name, request.Username),
-            new Claim(ClaimTypes.Role, "User")
-        };
+            var user = await _userRepository.GetByUsernameAsync(request.Username);
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            if (user == null || user.PasswordHash != request.Password) 
+            {
+                _metrics.IncrementClientError();
+                _metrics.IncrementRequestFailure();
 
-        var token = new JwtSecurityToken(
-            issuer: _jwtSettings.Issuer,
-            audience: _jwtSettings.Audience,
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(_jwtSettings.TokenHours),
-            signingCredentials: creds);
+                return Unauthorized(new
+                {
+                    error = "Invalid username or password."
+                });
+            }
 
-        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, "User")
+            };
 
-        return Ok(new { token = tokenString });
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(_jwtSettings.TokenHours),
+                signingCredentials: creds);
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+            _metrics.IncrementRequestSuccess();
+
+            return Ok(new { token = tokenString });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Login failed for username {Username}", request.Username);
+
+            _metrics.IncrementServerError();
+            _metrics.IncrementRequestFailure();
+
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                "An unexpected error occurred during login.");
+        }
+        finally
+        {
+            _metrics.RecordRequestDuration(sw.Elapsed.TotalMilliseconds);
+        }
     }
 }

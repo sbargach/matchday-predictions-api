@@ -18,6 +18,11 @@ namespace MatchdayPredictions.Api.Repositories
             await _context.CreateUserAsync(request);
         }
 
+        public Task<User?> GetByUsernameAsync(string username)
+        {
+            return _context.GetUserByUsernameAsync(username);
+        }
+
         public async Task<User?> GetUserByIdAsync(int userId)
         {
             return await _context.GetUserByIdAsync(userId);

@@ -19,5 +19,12 @@ namespace MatchdayPredictions.Api.Repositories.Interfaces
         /// <param name="userId">The user ID.</param>
         /// <returns>The user if found, otherwise null.</returns>
         Task<User?> GetUserByIdAsync(int userId);
+        /// <summary>
+        /// Retrieves a specific user by username
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>The user if found, otherwise null.</returns>
+        Task<User?> GetByUsernameAsync(string username);
+
     }
 }

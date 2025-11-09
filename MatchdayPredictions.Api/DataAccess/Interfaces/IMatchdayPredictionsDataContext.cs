@@ -86,4 +86,11 @@ public interface IMatchdayPredictionsDataContext
     /// </summary>
     /// <param name="request">The match details to insert.</param>
     Task CreateMatchAsync(CreateMatchRequest request);
+
+    /// <summary>
+    /// Executes the stored procedure to retrieve a user by their username
+    /// </summary>
+    /// <param name="userId">The ID of the user to retrieve.</param>
+    /// <returns>The user if found; otherwise null.</returns>
+    Task<User?> GetUserByUsernameAsync(string username);
 }

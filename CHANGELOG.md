@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.10.0] - 2025-11-09
+### Added
+- Added OpenTelemetry metrics and improved JWT authorization flow across the API.
+
 ## [0.9.0] - 2025-11-08
 ### Added
 - Added matches controller and integrated repository.
