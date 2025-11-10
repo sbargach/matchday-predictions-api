@@ -1,4 +1,5 @@
 ﻿using MatchdayPredictions.Api.Models;
+using MatchdayPredictions.Api.Models.Api;
 using MatchdayPredictions.Api.OpenTelemetry;
 using MatchdayPredictions.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;

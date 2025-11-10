@@ -1,5 +1,6 @@
 ﻿using MatchdayPredictions.Api.DataAccess.Interfaces;
 using MatchdayPredictions.Api.Models;
+using MatchdayPredictions.Api.Models.Api;
 using MatchdayPredictions.Api.Repositories.Interfaces;
 
 namespace MatchdayPredictions.Api.Repositories

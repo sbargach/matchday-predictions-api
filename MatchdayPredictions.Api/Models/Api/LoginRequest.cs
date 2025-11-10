@@ -1,11 +1,15 @@
-﻿namespace MatchdayPredictions.Api.Models.Api
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MatchdayPredictions.Api.Models.Api
 {
-    /// <summary>
-    /// Represents a login request with username and password.
-    /// </summary>
-    public sealed class LoginRequest
+    public sealed record LoginRequest
     {
-        public string Username { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
+        [Required]
+        [MinLength(3)]
+        public string Username { get; init; } = string.Empty;
+
+        [Required]
+        [MinLength(6)]
+        public string Password { get; init; } = string.Empty;
     }
 }

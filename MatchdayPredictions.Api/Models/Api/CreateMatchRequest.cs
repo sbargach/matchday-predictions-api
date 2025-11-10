@@ -1,28 +1,25 @@
-﻿namespace MatchdayPredictions.Api.Models.Api
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MatchdayPredictions.Api.Models.Api
 {
-    /// <summary>
-    /// Represents the request payload for creating a new match.
-    /// </summary>
-    public sealed class CreateMatchRequest
+    public sealed record CreateMatchRequest
     {
-        /// <summary>
-        /// The league in which the match will be played.
-        /// </summary>
-        public int LeagueId { get; set; }
+        [Required]
+        [Range(1, int.MaxValue)]
+        public int LeagueId { get; init; }
 
-        /// <summary>
-        /// The home team participating in the match.
-        /// </summary>
-        public string HomeTeam { get; set; } = string.Empty;
+        [Required]
+        [MinLength(2)]
+        [MaxLength(100)]
+        public string HomeTeam { get; init; } = string.Empty;
 
-        /// <summary>
-        /// The away team participating in the match.
-        /// </summary>
-        public string AwayTeam { get; set; } = string.Empty;
+        [Required]
+        [MinLength(2)]
+        [MaxLength(100)]
+        public string AwayTeam { get; init; } = string.Empty;
 
-        /// <summary>
-        /// The scheduled kickoff time in UTC.
-        /// </summary>
-        public DateTime KickoffUtc { get; set; }
+        [Required]
+        [DataType(DataType.DateTime)]
+        public DateTime KickoffUtc { get; init; }
     }
 }

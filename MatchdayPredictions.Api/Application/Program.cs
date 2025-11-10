@@ -6,6 +6,7 @@ using MatchdayPredictions.Api.OpenTelemetry;
 using MatchdayPredictions.Api.Repositories;
 using MatchdayPredictions.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using OpenTelemetry.Metrics;
 using Prometheus;
@@ -55,8 +56,7 @@ public class Program
             .Enrich.WithEnvironmentUserName()
             .Enrich.WithMachineName()
             .WriteTo.Console(
-                outputTemplate:
-                "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext} {Message:lj}{NewLine}{Exception}")
+                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext} {Message:lj}{NewLine}{Exception}")
             .CreateLogger();
     }
 
@@ -68,7 +68,27 @@ public class Program
         builder.Services.Configure<JwtSettings>(
             builder.Configuration.GetSection("Jwt"));
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+            .ConfigureApiBehaviorOptions(options =>
+            {
+                options.InvalidModelStateResponseFactory = context =>
+                {
+                    var errors = context.ModelState
+                        .Where(e => e.Value!.Errors.Count > 0)
+                        .Select(e => new
+                        {
+                            Field = e.Key,
+                            Errors = e.Value!.Errors.Select(err => err.ErrorMessage)
+                        });
+
+                    return new BadRequestObjectResult(new
+                    {
+                        Message = "Validation failed",
+                        Errors = errors
+                    });
+                };
+            });
+
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 

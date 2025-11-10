@@ -1,4 +1,5 @@
 ﻿using MatchdayPredictions.Api.Models;
+using MatchdayPredictions.Api.Models.Api;
 
 namespace MatchdayPredictions.Api.Repositories.Interfaces
 {
