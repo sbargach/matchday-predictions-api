@@ -1,4 +1,3 @@
-﻿using MatchdayPredictions.Api.DataAccess.Repository;
 using MatchdayPredictions.Api.Models;
 using MatchdayPredictions.Api.Models.Api;
 using MatchdayPredictions.Api.OpenTelemetry;
@@ -101,3 +100,4 @@ public class LeaguesController : ControllerBase
         }
     }
 }
+

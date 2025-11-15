@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.14.0] - 2025-11-15
+### Changed
+- Refactored data access into per-domain contexts (user, league, match, prediction) with a shared SQL base context.
+- Aligned API stored procedure usage with the database project and removed unused database operations from the API surface.
+
 ## [0.13.0] - 2025-11-15
 ### Added
 - Implemented BCrypt-based password hashing and secure JWT login flow.

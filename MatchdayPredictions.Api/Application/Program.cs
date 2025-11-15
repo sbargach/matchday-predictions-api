@@ -1,6 +1,5 @@
 using MatchdayPredictions.Api.DataAccess;
 using MatchdayPredictions.Api.DataAccess.Interfaces;
-using MatchdayPredictions.Api.DataAccess.Repository;
 using MatchdayPredictions.Api.Models.Configuration;
 using MatchdayPredictions.Api.OpenTelemetry;
 using MatchdayPredictions.Api.Repositories;
@@ -95,7 +94,11 @@ public class Program
         ConfigureJwt(builder);
         ConfigureOpenTelemetry(builder);
 
-        builder.Services.AddScoped<IMatchdayPredictionsDataContext, MatchdayPredictionsDataContext>();
+        builder.Services.AddScoped<IUserDataContext, UserDataContext>();
+        builder.Services.AddScoped<ILeagueDataContext, LeagueDataContext>();
+        builder.Services.AddScoped<IMatchDataContext, MatchDataContext>();
+        builder.Services.AddScoped<IPredictionDataContext, PredictionDataContext>();
+
         builder.Services.AddScoped<IPredictionRepository, PredictionRepository>();
         builder.Services.AddScoped<ILeagueRepository, LeagueRepository>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();

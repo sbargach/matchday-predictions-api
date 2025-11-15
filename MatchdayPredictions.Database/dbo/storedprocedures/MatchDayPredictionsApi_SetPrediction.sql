@@ -1,18 +1,20 @@
-﻿CREATE PROCEDURE dbo.MatchDayPredictionsApi_SetPrediction
-    @UserName  NVARCHAR(50),
-    @LeagueId  INT,
+CREATE PROCEDURE dbo.MatchDayPredictionsApi_SetPrediction
     @MatchId   INT,
+    @UserId    INT,
     @HomeGoals TINYINT,
     @AwayGoals TINYINT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @UserId INT;
+    DECLARE @LeagueId INT;
 
-    SELECT @UserId = u.Id
-    FROM dbo.Users AS u
-    WHERE u.UserName = @UserName;
+    SELECT @LeagueId = lm.LeagueId
+    FROM dbo.LeagueMatches AS lm
+    WHERE lm.MatchId = @MatchId;
+
+    IF @LeagueId IS NULL
+        RETURN;
 
     UPDATE p
        SET PredictedHomeGoals = @HomeGoals,
@@ -32,3 +34,4 @@ BEGIN
     END
 END
 GO
+
