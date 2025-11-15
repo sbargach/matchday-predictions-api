@@ -103,7 +103,7 @@ public sealed class MatchdayPredictionsDataContext : IMatchdayPredictionsDataCon
                     commandType: CommandType.StoredProcedure)));
     }
 
-    public async Task CreateUserAsync(CreateUserRequest request)
+    public async Task CreateUserAsync(string username, string displayName, string email, string passwordHash)
     {
         await _retryPolicy.ExecuteAsync(() =>
             ExecuteDbOperationAsync(
@@ -112,8 +112,10 @@ public sealed class MatchdayPredictionsDataContext : IMatchdayPredictionsDataCon
                     "MatchDayPredictionsApi_CreateUser",
                     new
                     {
-                        request.Username,
-                        request.Email
+                        UserName = username,
+                        DisplayName = displayName,
+                        Email = email,
+                        PasswordHash = passwordHash
                     },
                     commandType: CommandType.StoredProcedure)));
     }

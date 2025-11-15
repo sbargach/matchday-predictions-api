@@ -52,8 +52,11 @@ public interface IMatchdayPredictionsDataContext
     /// <summary>
     /// Executes the stored procedure to create a new user.
     /// </summary>
-    /// <param name="request">The user details required for creation.</param>
-    Task CreateUserAsync(CreateUserRequest request);
+    /// <param name="username">The username for the new user.</param>
+    /// <param name="displayName">The display name for the new user.</param>
+    /// <param name="email">The email address for the new user.</param>
+    /// <param name="passwordHash">The hashed password for the new user.</param>
+    Task CreateUserAsync(string username, string displayName, string email, string passwordHash);
 
     /// <summary>
     /// Executes the stored procedure to retrieve a user by their unique ID.

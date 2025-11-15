@@ -27,6 +27,9 @@ public class MatchesController : ControllerBase
         _logger = logger;
     }
 
+    /// <summary>
+    /// Retrieves a match by its unique identifier.
+    /// </summary>
     [HttpGet("{matchId:int}")]
     [ProducesResponseType(typeof(Match), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -68,6 +71,9 @@ public class MatchesController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Retrieves all matches for a given league.
+    /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Match>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -101,6 +107,9 @@ public class MatchesController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Creates a new match. Only authenticated users can create matches.
+    /// </summary>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -115,7 +124,9 @@ public class MatchesController : ControllerBase
 
             _metrics.IncrementRequestSuccess();
 
-            return CreatedAtAction(nameof(GetById), new { matchId = 0 }, request);
+            return CreatedAtAction(nameof(GetById),
+                new { matchId = 0 },
+                request);
         }
         catch (Exception ex)
         {

@@ -15,7 +15,12 @@ namespace MatchdayPredictions.Api.Repositories
 
         public async Task CreateUserAsync(CreateUserRequest request)
         {
-            await _context.CreateUserAsync(request);
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+            var displayName = string.IsNullOrWhiteSpace(request.DisplayName)
+                ? request.Username
+                : request.DisplayName;
+
+            await _context.CreateUserAsync(request.Username, displayName, request.Email, passwordHash);
         }
 
         public Task<User?> GetByUsernameAsync(string username)

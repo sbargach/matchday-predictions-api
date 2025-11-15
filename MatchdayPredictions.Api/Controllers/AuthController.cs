@@ -1,19 +1,21 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using MatchdayPredictions.Api.Models.Api;
 using MatchdayPredictions.Api.Models.Configuration;
 using MatchdayPredictions.Api.OpenTelemetry;
 using MatchdayPredictions.Api.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.Diagnostics;
 
 namespace MatchdayPredictions.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[AllowAnonymous]
 public class AuthController : ControllerBase
 {
     private readonly JwtSettings _jwtSettings;
@@ -46,7 +48,7 @@ public class AuthController : ControllerBase
         {
             var user = await _userRepository.GetByUsernameAsync(request.Username);
 
-            if (user == null || user.PasswordHash != request.Password) 
+            if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
             {
                 _metrics.IncrementClientError();
                 _metrics.IncrementRequestFailure();
@@ -59,8 +61,8 @@ public class AuthController : ControllerBase
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Role, "User")
             };
 
@@ -96,3 +98,4 @@ public class AuthController : ControllerBase
         }
     }
 }
+

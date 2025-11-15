@@ -6,9 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.13.0] - 2025-11-15
+### Added
+- Implemented BCrypt-based password hashing and secure JWT login flow.
+- Aligned API user models and repositories with database schema (Users table, GetUserById/GetUserByUsername stored procedures).
+
 ## [0.12.0] - 2025-11-10
 ### Added
-- Added model validation.
+- Added model validation for request DTOs.
 
 ## [0.11.0] - 2025-11-09
 ### Added

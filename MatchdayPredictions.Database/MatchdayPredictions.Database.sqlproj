@@ -69,6 +69,7 @@
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_CreateLeague.sql" />
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_AddUserToLeague.sql" />
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_SetPrediction.sql" />
+    <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_GetUserByUsername.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CHANGELOG.md" />

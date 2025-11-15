@@ -5,6 +5,7 @@ using MatchdayPredictions.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace MatchdayPredictions.Api.Controllers;
 
@@ -27,8 +28,12 @@ public class PredictionsController : ControllerBase
         _logger = logger;
     }
 
+    /// <summary>
+    /// Creates or updates a prediction. User can ONLY submit predictions for themselves.
+    /// </summary>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> AddPrediction([FromBody] CreatePredictionRequest request)
     {
@@ -37,6 +42,15 @@ public class PredictionsController : ControllerBase
 
         try
         {
+            var currentUserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            // Enforce: user can only create THEIR own predictions
+            if (currentUserId != request.UserId)
+            {
+                _metrics.IncrementClientError();
+                return Forbid();
+            }
+
             await _repository.AddPredictionAsync(request);
             _metrics.IncrementRequestSuccess();
 
@@ -46,7 +60,8 @@ public class PredictionsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error occurred while adding prediction for match {MatchId}", request.MatchId);
+            _logger.LogError(ex,
+                "Error occurred while adding prediction for match {MatchId}", request.MatchId);
 
             _metrics.IncrementServerError();
             _metrics.IncrementRequestFailure();
@@ -62,8 +77,12 @@ public class PredictionsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Retrieves a match prediction. User can ONLY retrieve their OWN predictions.
+    /// </summary>
     [HttpGet("{matchId:int}")]
     [ProducesResponseType(typeof(MatchPrediction), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetPrediction([FromRoute] int matchId, [FromQuery] int userId)
@@ -73,6 +92,15 @@ public class PredictionsController : ControllerBase
 
         try
         {
+            var currentUserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            // Enforce: user can only retrieve THEIR own predictions
+            if (currentUserId != userId)
+            {
+                _metrics.IncrementClientError();
+                return Forbid();
+            }
+
             var prediction = await _repository.GetPredictionAsync(matchId, userId);
 
             if (prediction == null)
@@ -87,7 +115,8 @@ public class PredictionsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error occurred while retrieving prediction for match {MatchId}", matchId);
+            _logger.LogError(ex,
+                "Error retrieving prediction for match {MatchId}", matchId);
 
             _metrics.IncrementServerError();
             _metrics.IncrementRequestFailure();
