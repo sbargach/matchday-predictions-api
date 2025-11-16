@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.16.0] - 2025-11-16
+### Changed
+- Update to .NET 10.
+- Add Dockerfile
+- Add github actions
+
 ## [0.15.0] - 2025-11-16
 ### Added
 - Enabled OpenTelemetry tracing for ASP.NET Core and HTTP client requests with OTLP export.
