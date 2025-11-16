@@ -6,6 +6,7 @@ using MatchdayPredictions.Api.Repositories;
 using MatchdayPredictions.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
@@ -115,8 +116,17 @@ public class Program
 
     private static void ConfigureJwt(WebApplicationBuilder builder)
     {
-        var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
+        var jwtSection = builder.Configuration.GetRequiredSection("Jwt");
+        var jwtSettings = jwtSection.Get<JwtSettings>()
+                          ?? throw new InvalidOperationException("Jwt configuration section is missing or invalid.");
+
+        if (string.IsNullOrWhiteSpace(jwtSettings.Key))
+        {
+            throw new InvalidOperationException("Jwt:Key must be configured.");
+        }
+
+        var keyBytes = Encoding.UTF8.GetBytes(jwtSettings.Key);
+        var key = new SymmetricSecurityKey(keyBytes);
 
         builder.Services
             .AddAuthentication(options =>

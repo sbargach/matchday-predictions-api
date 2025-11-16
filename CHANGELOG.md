@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.16.1] - 2025-11-16
+### Fixed
+- Fix github actions
+
 ## [0.16.0] - 2025-11-16
 ### Changed
 - Update to .NET 10.
