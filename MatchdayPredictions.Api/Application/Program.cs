@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 using Prometheus;
 using Serilog;
 using Serilog.Events;
@@ -90,6 +91,7 @@ public class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddMemoryCache();
 
         ConfigureJwt(builder);
         ConfigureOpenTelemetry(builder);
@@ -100,7 +102,13 @@ public class Program
         builder.Services.AddScoped<IPredictionDataContext, PredictionDataContext>();
 
         builder.Services.AddScoped<IPredictionRepository, PredictionRepository>();
-        builder.Services.AddScoped<ILeagueRepository, LeagueRepository>();
+        builder.Services.AddScoped<LeagueRepository>();
+        builder.Services.AddScoped<ILeagueRepository>(sp =>
+        {
+            var inner = sp.GetRequiredService<LeagueRepository>();
+            var cache = sp.GetRequiredService<IMemoryCache>();
+            return new CachedLeagueRepository(inner, cache);
+        });
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IMatchRepository, MatchRepository>();
     }
@@ -139,6 +147,14 @@ public class Program
         builder.Services.AddSingleton<IMetricsProvider, MetricsProvider>();
 
         builder.Services.AddOpenTelemetry()
+            .WithTracing(tracing =>
+            {
+                tracing
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation();
+
+                tracing.AddOtlpExporter();
+            })
             .WithMetrics(metrics =>
             {
                 metrics.AddAspNetCoreInstrumentation();

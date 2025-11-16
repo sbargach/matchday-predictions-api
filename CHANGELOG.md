@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.15.0] - 2025-11-16
+### Added
+- Enabled OpenTelemetry tracing for ASP.NET Core and HTTP client requests with OTLP export.
+- Introduced an in-memory caching decorator for league queries to reduce database load.
+- Added focused unit tests for prediction authorization rules and core model validation.
+
 ## [0.14.0] - 2025-11-15
 ### Changed
 - Refactored data access into per-domain contexts (user, league, match, prediction) with a shared SQL base context.
