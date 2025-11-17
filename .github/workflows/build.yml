@@ -26,9 +26,9 @@ jobs:
         run: dotnet test MatchdayPredictions.Api.Tests/MatchdayPredictions.Api.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
 
       - name: Publish test results
-        if: always()
+        if: always() && hashFiles('**/*.trx') != ''
         uses: dorny/test-reporter@v1
         with:
           name: Unit Tests
-          path: '**/TestResults/**/test-results.trx'
+          path: '**/*.trx'
           reporter: dotnet-trx
