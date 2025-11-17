@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MatchdayPredictions.Api.Models.Api;
 
-namespace MatchdayPredictions.Api.Tests;
+namespace MatchdayPredictions.Api.Tests.Models;
 
 [TestClass]
 public class ModelValidationTests

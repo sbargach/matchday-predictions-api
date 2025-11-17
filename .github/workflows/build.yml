@@ -23,5 +23,12 @@ jobs:
         run: dotnet build MatchdayPredictions.Api/MatchdayPredictions.Api.csproj --no-restore --configuration Release
 
       - name: Test
-        run: dotnet test MatchdayPredictions.Api.Tests/MatchdayPredictions.Api.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage"
+        run: dotnet test MatchdayPredictions.Api.Tests/MatchdayPredictions.Api.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
 
+      - name: Publish test results
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Unit Tests
+          path: '**/TestResults/test-results.trx'
+          reporter: dotnet-trx

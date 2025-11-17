@@ -1,14 +1,11 @@
 using System.Security.Claims;
 using MatchdayPredictions.Api.Controllers;
-using MatchdayPredictions.Api.Models;
 using MatchdayPredictions.Api.Models.Api;
-using MatchdayPredictions.Api.OpenTelemetry;
-using MatchdayPredictions.Api.Repositories.Interfaces;
+using MatchdayPredictions.Api.Tests.Fakes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-namespace MatchdayPredictions.Api.Tests;
+namespace MatchdayPredictions.Api.Tests.Controllers;
 
 [TestClass]
 public class PredictionsControllerTests
@@ -110,66 +107,4 @@ public class PredictionsControllerTests
         return context;
     }
 
-    private sealed class FakePredictionRepository : IPredictionRepository
-    {
-        public bool AddPredictionCalled { get; private set; }
-        public bool GetPredictionCalled { get; private set; }
-        public CreatePredictionRequest? LastRequest { get; private set; }
-
-        public Task AddPredictionAsync(CreatePredictionRequest request)
-        {
-            AddPredictionCalled = true;
-            LastRequest = request;
-            return Task.CompletedTask;
-        }
-
-        public Task<MatchPrediction?> GetPredictionAsync(int matchId, int userId)
-        {
-            GetPredictionCalled = true;
-            return Task.FromResult<MatchPrediction?>(null);
-        }
-    }
-
-    private sealed class FakeMetricsProvider : IMetricsProvider
-    {
-        public int RequestCount { get; private set; }
-        public int SuccessCount { get; private set; }
-        public int FailureCount { get; private set; }
-        public int ClientErrorCount { get; private set; }
-        public int ServerErrorCount { get; private set; }
-
-        public void IncrementRequest() => RequestCount++;
-        public void IncrementRequestSuccess() => SuccessCount++;
-        public void IncrementRequestFailure() => FailureCount++;
-        public void IncrementClientError() => ClientErrorCount++;
-        public void IncrementServerError() => ServerErrorCount++;
-        public void IncrementDatabaseFailure() { }
-        public void RecordRequestDuration(double milliseconds) { }
-        public void RecordDatabaseQueryDuration(double milliseconds) { }
-    }
-
-    private sealed class FakeLogger<T> : ILogger<T>
-    {
-        public IDisposable BeginScope<TState>(TState state) => NullScope.Instance;
-
-        public bool IsEnabled(LogLevel logLevel) => false;
-
-        public void Log<TState>(
-            LogLevel logLevel,
-            EventId eventId,
-            TState state,
-            Exception? exception,
-            Func<TState, Exception?, string> formatter)
-        {
-        }
-
-        private sealed class NullScope : IDisposable
-        {
-            public static readonly NullScope Instance = new();
-
-            public void Dispose()
-            {
-            }
-        }
-    }
 }
