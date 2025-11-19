@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using MatchdayPredictions.Api.Controllers;
+using MatchdayPredictions.Api.Models;
 using MatchdayPredictions.Api.Models.Api;
 using MatchdayPredictions.Api.Tests.Fakes;
 using Microsoft.AspNetCore.Http;
@@ -92,6 +93,66 @@ public class PredictionsControllerTests
 
         result.ShouldBeOfType<ForbidResult>();
         repository.GetPredictionCalled.ShouldBeFalse();
+    }
+
+    [TestMethod]
+    public async Task GetPrediction_WhenPredictionDoesNotExist_ReturnsNotFound()
+    {
+        var repository = new FakePredictionRepository
+        {
+            PredictionToReturn = null
+        };
+        var metrics = new FakeMetricsProvider();
+        var logger = new FakeLogger<PredictionsController>();
+
+        var controller = new PredictionsController(repository, metrics, logger)
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = CreateHttpContextWithUserId(userId: 7)
+            }
+        };
+
+        var result = await controller.GetPrediction(matchId: 10, userId: 7);
+
+        result.ShouldBeOfType<NotFoundResult>();
+        repository.GetPredictionCalled.ShouldBeTrue();
+    }
+
+    [TestMethod]
+    public async Task GetPrediction_WhenPredictionExists_ReturnsPrediction()
+    {
+        var prediction = new MatchPrediction
+        {
+            MatchId = 20,
+            UserId = 5,
+            HomeTeam = "Home",
+            AwayTeam = "Away",
+            HomeGoals = 2,
+            AwayGoals = 1,
+            KickoffUtc = DateTime.UtcNow
+        };
+
+        var repository = new FakePredictionRepository
+        {
+            PredictionToReturn = prediction
+        };
+        var metrics = new FakeMetricsProvider();
+        var logger = new FakeLogger<PredictionsController>();
+
+        var controller = new PredictionsController(repository, metrics, logger)
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = CreateHttpContextWithUserId(userId: prediction.UserId)
+            }
+        };
+
+        var result = await controller.GetPrediction(matchId: prediction.MatchId, userId: prediction.UserId);
+
+        var okResult = result.ShouldBeOfType<OkObjectResult>();
+        okResult.Value.ShouldBeOfType<MatchPrediction>()
+            .MatchId.ShouldBe(prediction.MatchId);
     }
 
     private static HttpContext CreateHttpContextWithUserId(int userId)

@@ -1,4 +1,5 @@
 using MatchdayPredictions.Api.Controllers;
+using MatchdayPredictions.Api.Models;
 using MatchdayPredictions.Api.Models.Api;
 using MatchdayPredictions.Api.Tests.Fakes;
 using Microsoft.AspNetCore.Http;
@@ -63,5 +64,66 @@ public class MatchesControllerTests
         metrics.RequestCount.ShouldBe(1);
         metrics.ServerErrorCount.ShouldBe(1);
         metrics.FailureCount.ShouldBe(1);
+    }
+
+    [TestMethod]
+    public async Task GetById_WhenMatchExists_ReturnsOkWithMatch()
+    {
+        var repository = new FakeMatchRepository
+        {
+            MatchToReturn = new Match
+            {
+                MatchId = 123,
+                LeagueId = 7,
+                HomeTeam = "Home",
+                AwayTeam = "Away",
+                KickoffUtc = DateTime.UtcNow
+            }
+        };
+
+        var controller = CreateController(repository, out var _);
+
+        var result = await controller.GetById(123);
+
+        var okResult = result.ShouldBeOfType<OkObjectResult>();
+        okResult.Value.ShouldBeOfType<Match>()
+            .MatchId.ShouldBe(123);
+    }
+
+    [TestMethod]
+    public async Task GetByLeague_WhenRepositoryReturnsMatches_ReturnsOkWithMatches()
+    {
+        var repository = new FakeMatchRepository
+        {
+            MatchesToReturn = new[]
+            {
+                new Match
+                {
+                    MatchId = 1,
+                    LeagueId = 7,
+                    HomeTeam = "Home 1",
+                    AwayTeam = "Away 1",
+                    KickoffUtc = DateTime.UtcNow
+                },
+                new Match
+                {
+                    MatchId = 2,
+                    LeagueId = 7,
+                    HomeTeam = "Home 2",
+                    AwayTeam = "Away 2",
+                    KickoffUtc = DateTime.UtcNow
+                }
+            }
+        };
+
+        var controller = CreateController(repository, out var _);
+
+        var result = await controller.GetByLeague(leagueId: 7);
+
+        var okResult = result.ShouldBeOfType<OkObjectResult>();
+        var matches = okResult.Value.ShouldBeOfType<IEnumerable<Match>>();
+
+        matches.ShouldContain(m => m.MatchId == 1);
+        matches.ShouldContain(m => m.MatchId == 2);
     }
 }

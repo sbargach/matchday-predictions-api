@@ -9,6 +9,7 @@ internal sealed class FakePredictionRepository : IPredictionRepository
     public bool AddPredictionCalled { get; private set; }
     public bool GetPredictionCalled { get; private set; }
     public CreatePredictionRequest? LastRequest { get; private set; }
+    public MatchPrediction? PredictionToReturn { get; set; }
 
     public Task AddPredictionAsync(CreatePredictionRequest request)
     {
@@ -20,7 +21,6 @@ internal sealed class FakePredictionRepository : IPredictionRepository
     public Task<MatchPrediction?> GetPredictionAsync(int matchId, int userId)
     {
         GetPredictionCalled = true;
-        return Task.FromResult<MatchPrediction?>(null);
+        return Task.FromResult(PredictionToReturn);
     }
 }
-
