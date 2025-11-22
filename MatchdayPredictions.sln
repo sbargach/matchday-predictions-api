@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayPredictions.Api", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayPredictions.Api.Tests", "MatchdayPredictions.Api.Tests\MatchdayPredictions.Api.Tests.csproj", "{453C4426-53E4-4048-9EF7-4A0A7C465662}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchdayPredictions.Api.IntegrationTests", "MatchdayPredictions.Api.IntegrationTests\MatchdayPredictions.Api.IntegrationTests.csproj", "{0B91F28A-7EAF-4B65-9D64-C30A1313A7D2}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
@@ -29,6 +31,10 @@ Global
 		{453C4426-53E4-4048-9EF7-4A0A7C465662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{453C4426-53E4-4048-9EF7-4A0A7C465662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{453C4426-53E4-4048-9EF7-4A0A7C465662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B91F28A-7EAF-4B65-9D64-C30A1313A7D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B91F28A-7EAF-4B65-9D64-C30A1313A7D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B91F28A-7EAF-4B65-9D64-C30A1313A7D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B91F28A-7EAF-4B65-9D64-C30A1313A7D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3BC862FA-6B1A-4B8E-A0E8-1AC9A3521A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3BC862FA-6B1A-4B8E-A0E8-1AC9A3521A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BC862FA-6B1A-4B8E-A0E8-1AC9A3521A86}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
