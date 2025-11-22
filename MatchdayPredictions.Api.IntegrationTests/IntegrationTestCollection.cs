@@ -1,3 +1,4 @@
+using MatchdayPredictions.Api.IntegrationTests.Infrastructure;
 using Xunit;
 
 namespace MatchdayPredictions.Api.IntegrationTests;
