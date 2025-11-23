@@ -20,8 +20,9 @@ namespace MatchdayPredictions.Api.Models.Api
         public string Email { get; init; } = string.Empty;
 
         [Required]
-        [MinLength(6)]
+        [MinLength(8)]
         [MaxLength(100)]
+        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", ErrorMessage = "Password must contain upper, lower, and digit.")]
         public string Password { get; init; } = string.Empty;
     }
 }

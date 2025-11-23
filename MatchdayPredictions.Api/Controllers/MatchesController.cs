@@ -9,7 +9,8 @@ using System.Diagnostics;
 namespace MatchdayPredictions.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
+[ApiVersion("1.0")]
 [Authorize]
 public class MatchesController : ControllerBase
 {
@@ -32,8 +33,8 @@ public class MatchesController : ControllerBase
     /// </summary>
     [HttpGet("{matchId:int}")]
     [ProducesResponseType(typeof(Match), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetById(int matchId)
     {
         var sw = Stopwatch.StartNew();
@@ -47,7 +48,7 @@ public class MatchesController : ControllerBase
             {
                 _metrics.IncrementClientError();
                 _metrics.IncrementRequestFailure();
-                return NotFound();
+                return NotFound(ErrorResponse.FromMessage("Match not found."));
             }
 
             _metrics.IncrementRequestSuccess();
@@ -60,10 +61,8 @@ public class MatchesController : ControllerBase
             _metrics.IncrementServerError();
             _metrics.IncrementRequestFailure();
 
-            return StatusCode(StatusCodes.Status500InternalServerError, new
-            {
-                error = "An unexpected error occurred while retrieving the match."
-            });
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                ErrorResponse.FromMessage("An unexpected error occurred while retrieving the match."));
         }
         finally
         {
@@ -76,7 +75,7 @@ public class MatchesController : ControllerBase
     /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Match>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetByLeague([FromQuery] int leagueId)
     {
         var sw = Stopwatch.StartNew();
@@ -96,10 +95,8 @@ public class MatchesController : ControllerBase
             _metrics.IncrementServerError();
             _metrics.IncrementRequestFailure();
 
-            return StatusCode(StatusCodes.Status500InternalServerError, new
-            {
-                error = "An unexpected error occurred while retrieving matches."
-            });
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                ErrorResponse.FromMessage("An unexpected error occurred while retrieving matches."));
         }
         finally
         {
@@ -112,7 +109,7 @@ public class MatchesController : ControllerBase
     /// </summary>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromBody] CreateMatchRequest request)
     {
         var sw = Stopwatch.StartNew();
@@ -135,10 +132,8 @@ public class MatchesController : ControllerBase
             _metrics.IncrementServerError();
             _metrics.IncrementRequestFailure();
 
-            return StatusCode(StatusCodes.Status500InternalServerError, new
-            {
-                error = "An unexpected error occurred while creating the match."
-            });
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                ErrorResponse.FromMessage("An unexpected error occurred while creating the match."));
         }
         finally
         {

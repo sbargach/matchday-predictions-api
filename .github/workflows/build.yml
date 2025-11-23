@@ -22,6 +22,9 @@ jobs:
       - name: Build
         run: dotnet build MatchdayPredictions.Api/MatchdayPredictions.Api.csproj --no-restore --configuration Release
 
+      - name: Pre-pull SQL Server image
+        run: docker pull mcr.microsoft.com/mssql/server:2022-latest
+
       - name: Test (unit)
         run: dotnet test MatchdayPredictions.Api.Tests/MatchdayPredictions.Api.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=unit-tests.trx" --results-directory TestResults
 

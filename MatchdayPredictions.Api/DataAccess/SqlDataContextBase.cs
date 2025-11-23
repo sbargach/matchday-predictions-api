@@ -15,6 +15,7 @@ namespace MatchdayPredictions.Api.DataAccess;
 /// </summary>
 public abstract class SqlDataContextBase
 {
+    private const int DefaultCommandTimeoutSeconds = 30;
     private readonly AsyncRetryPolicy _retryPolicy;
     private readonly ILogger _logger;
 
@@ -36,18 +37,18 @@ public abstract class SqlDataContextBase
         _retryPolicy = CreateRetryPolicy(settings.Value);
     }
 
-    protected Task ExecuteAsync(string procName, Func<SqlConnection, Task> operation)
+    protected Task ExecuteAsync(string procName, Func<SqlConnection, int, Task> operation)
         => _retryPolicy.ExecuteAsync(() => ExecuteInternalAsync(procName, async conn =>
         {
-            await operation(conn);
+            await operation(conn, DefaultCommandTimeoutSeconds);
             return 0;
         }));
 
-    protected Task<T?> QueryAsync<T>(string procName, Func<SqlConnection, Task<T?>> operation)
-        => _retryPolicy.ExecuteAsync(() => ExecuteInternalAsync(procName, operation));
+    protected Task<T?> QueryAsync<T>(string procName, Func<SqlConnection, int, Task<T?>> operation)
+        => _retryPolicy.ExecuteAsync(() => ExecuteInternalAsync(procName, conn => operation(conn, DefaultCommandTimeoutSeconds)));
 
-    protected Task<IEnumerable<T>> QueryListAsync<T>(string procName, Func<SqlConnection, Task<IEnumerable<T>>> operation)
-        => _retryPolicy.ExecuteAsync(() => ExecuteInternalAsync(procName, operation));
+    protected Task<IEnumerable<T>> QueryListAsync<T>(string procName, Func<SqlConnection, int, Task<IEnumerable<T>>> operation)
+        => _retryPolicy.ExecuteAsync(() => ExecuteInternalAsync(procName, conn => operation(conn, DefaultCommandTimeoutSeconds)));
 
     private async Task<T> ExecuteInternalAsync<T>(string procName, Func<SqlConnection, Task<T>> operation)
     {
@@ -87,4 +88,3 @@ public abstract class SqlDataContextBase
                         ex));
     }
 }
-

@@ -25,27 +25,29 @@ public sealed class MatchDataContext : SqlDataContextBase, IMatchDataContext
     {
         return QueryAsync(
             "MatchDayPredictionsApi_GetMatchById",
-            conn => conn.QuerySingleOrDefaultAsync<Match>(
+            (conn, timeout) => conn.QuerySingleOrDefaultAsync<Match>(
                 "MatchDayPredictionsApi_GetMatchById",
                 new { MatchId = matchId },
-                commandType: CommandType.StoredProcedure));
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: timeout));
     }
 
     public Task<IEnumerable<Match>> GetMatchesByLeagueAsync(int leagueId)
     {
         return QueryListAsync(
             "MatchDayPredictionsApi_GetMatchesByLeague",
-            conn => conn.QueryAsync<Match>(
+            (conn, timeout) => conn.QueryAsync<Match>(
                 "MatchDayPredictionsApi_GetMatchesByLeague",
                 new { LeagueId = leagueId },
-                commandType: CommandType.StoredProcedure));
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: timeout));
     }
 
     public Task CreateMatchAsync(CreateMatchRequest request)
     {
         return ExecuteAsync(
             "MatchDayPredictionsApi_CreateMatch",
-            conn => conn.ExecuteAsync(
+            (conn, timeout) => conn.ExecuteAsync(
                 "MatchDayPredictionsApi_CreateMatch",
                 new
                 {
@@ -54,7 +56,7 @@ public sealed class MatchDataContext : SqlDataContextBase, IMatchDataContext
                     request.AwayTeam,
                     request.KickoffUtc
                 },
-                commandType: CommandType.StoredProcedure));
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: timeout));
     }
 }
-

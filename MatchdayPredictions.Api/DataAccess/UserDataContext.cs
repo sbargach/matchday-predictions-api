@@ -24,7 +24,7 @@ public sealed class UserDataContext : SqlDataContextBase, IUserDataContext
     {
         return ExecuteAsync(
             "MatchDayPredictionsApi_CreateUser",
-            conn => conn.ExecuteAsync(
+            (conn, timeout) => conn.ExecuteAsync(
                 "MatchDayPredictionsApi_CreateUser",
                 new
                 {
@@ -33,27 +33,29 @@ public sealed class UserDataContext : SqlDataContextBase, IUserDataContext
                     Email = email,
                     PasswordHash = passwordHash
                 },
-                commandType: CommandType.StoredProcedure));
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: timeout));
     }
 
     public Task<User?> GetUserByIdAsync(int userId)
     {
         return QueryAsync(
             "MatchDayPredictionsApi_GetUserById",
-            conn => conn.QuerySingleOrDefaultAsync<User>(
+            (conn, timeout) => conn.QuerySingleOrDefaultAsync<User>(
                 "MatchDayPredictionsApi_GetUserById",
                 new { UserId = userId },
-                commandType: CommandType.StoredProcedure));
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: timeout));
     }
 
     public Task<User?> GetUserByUsernameAsync(string username)
     {
         return QueryAsync(
             "MatchDayPredictionsApi_GetUserByUsername",
-            conn => conn.QuerySingleOrDefaultAsync<User>(
+            (conn, timeout) => conn.QuerySingleOrDefaultAsync<User>(
                 "MatchDayPredictionsApi_GetUserByUsername",
                 new { UserName = username },
-                commandType: CommandType.StoredProcedure));
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: timeout));
     }
 }
-

@@ -20,6 +20,7 @@ public sealed class IntegrationTestFixture : IAsyncLifetime
         _dbContainer = new MsSqlBuilder()
             .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
             .WithPassword("Str0ngP@ssw0rd!")
+            .WithEnvironment("ACCEPT_EULA", "Y")
             .Build();
     }
 

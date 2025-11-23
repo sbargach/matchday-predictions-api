@@ -1,19 +1,27 @@
 using MatchdayPredictions.Api.DataAccess;
 using MatchdayPredictions.Api.DataAccess.Interfaces;
 using MatchdayPredictions.Api.Models.Configuration;
+using MatchdayPredictions.Api.Models.Api;
 using MatchdayPredictions.Api.OpenTelemetry;
 using MatchdayPredictions.Api.Repositories;
 using MatchdayPredictions.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
+using Microsoft.OpenApi.Models;
 using Prometheus;
 using Serilog;
 using Serilog.Events;
+using System.Threading.RateLimiting;
 using System.Text;
+using System.Text.Json;
+using Microsoft.Extensions.Options;
 
 public class Program
 {
@@ -68,7 +76,25 @@ public class Program
 
         builder.Services.Configure<JwtSettings>(
             builder.Configuration.GetSection("Jwt"));
+        builder.Services.AddOptions<JwtSettings>()
+            .Bind(builder.Configuration.GetSection("Jwt"))
+            .ValidateDataAnnotations()
+            .Validate(settings => !string.IsNullOrWhiteSpace(settings.Key), "Jwt:Key must be set")
+            .Validate(settings => !string.IsNullOrWhiteSpace(settings.Issuer), "Jwt:Issuer must be set")
+            .Validate(settings => !string.IsNullOrWhiteSpace(settings.Audience), "Jwt:Audience must be set")
+            .ValidateOnStart();
+        builder.Services.AddOptions<MatchdayPredictionsSettings>()
+            .Bind(builder.Configuration.GetSection("MatchdayPredictions"))
+            .Validate(settings => settings.MaxRetryCount > 0, "MatchdayPredictions:MaxRetryCount must be > 0")
+            .Validate(settings => settings.RetryDelaySeconds >= 0, "MatchdayPredictions:RetryDelaySeconds must be >= 0")
+            .ValidateOnStart();
 
+        builder.Services.AddApiVersioning(options =>
+        {
+            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.ReportApiVersions = true;
+        });
         builder.Services.AddControllers()
             .ConfigureApiBehaviorOptions(options =>
             {
@@ -76,26 +102,51 @@ public class Program
                 {
                     var errors = context.ModelState
                         .Where(e => e.Value!.Errors.Count > 0)
-                        .Select(e => new
-                        {
-                            Field = e.Key,
-                            Errors = e.Value!.Errors.Select(err => err.ErrorMessage)
-                        });
+                        .Select(e => new FieldError(
+                            e.Key,
+                            e.Value!.Errors.Select(err => err.ErrorMessage)));
 
-                    return new BadRequestObjectResult(new
-                    {
-                        Message = "Validation failed",
-                        Errors = errors
-                    });
+                    return new BadRequestObjectResult(
+                        ErrorResponse.FromValidation("Validation failed", errors));
                 };
             });
 
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Version = "v1",
+                Title = "Matchday Predictions API",
+                Description = "Football match predictions with leagues and scoring."
+            });
+
+            var securityScheme = new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "JWT Authorization header using the Bearer scheme."
+            };
+
+            options.AddSecurityDefinition("Bearer", securityScheme);
+
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    securityScheme,
+                    Array.Empty<string>()
+                }
+            });
+        });
         builder.Services.AddMemoryCache();
 
         ConfigureJwt(builder);
         ConfigureOpenTelemetry(builder);
+        ConfigureRateLimiting(builder);
+        ConfigureHealthChecks(builder);
 
         builder.Services.AddScoped<IUserDataContext, UserDataContext>();
         builder.Services.AddScoped<ILeagueDataContext, LeagueDataContext>();
@@ -174,6 +225,43 @@ public class Program
             });
     }
 
+    private static void ConfigureRateLimiting(WebApplicationBuilder builder)
+    {
+        builder.Services.AddRateLimiter(options =>
+        {
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            options.OnRejected = async (context, token) =>
+            {
+                if (context.HttpContext.Response.HasStarted)
+                {
+                    return;
+                }
+
+                context.HttpContext.Response.ContentType = "application/json";
+                var payload = System.Text.Json.JsonSerializer.Serialize(
+                    ErrorResponse.FromMessage("Too many requests. Please retry shortly."));
+                await context.HttpContext.Response.WriteAsync(payload, token);
+            };
+
+            options.AddFixedWindowLimiter("login", limiterOptions =>
+            {
+                limiterOptions.Window = TimeSpan.FromMinutes(1);
+                limiterOptions.PermitLimit = 10;
+                limiterOptions.QueueLimit = 2;
+                limiterOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+            });
+        });
+    }
+
+    private static void ConfigureHealthChecks(WebApplicationBuilder builder)
+    {
+        builder.Services.AddHealthChecks()
+            .AddSqlServer(
+                connectionString: builder.Configuration.GetConnectionString("matchdaypredictions") ?? string.Empty,
+                name: "sql",
+                failureStatus: HealthStatus.Unhealthy);
+    }
+
     private static WebApplication BuildApp(WebApplicationBuilder builder)
     {
         return builder.Build();
@@ -192,6 +280,7 @@ public class Program
         app.UseRouting();
 
         app.UseHttpMetrics();
+        app.UseRateLimiter();
 
         app.UseHttpsRedirection();
 
@@ -201,5 +290,7 @@ public class Program
         app.MapControllers();
 
         app.MapMetrics();
+
+        app.MapHealthChecks("/health");
     }
 }

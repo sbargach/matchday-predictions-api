@@ -10,7 +10,8 @@ using System.Security.Claims;
 namespace MatchdayPredictions.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
+[ApiVersion("1.0")]
 [Authorize]
 public class UsersController : ControllerBase
 {
@@ -28,7 +29,7 @@ public class UsersController : ControllerBase
     [AllowAnonymous]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
     {
         var sw = Stopwatch.StartNew();
@@ -47,7 +48,7 @@ public class UsersController : ControllerBase
             _metrics.IncrementServerError();
             _metrics.IncrementRequestFailure();
 
-            return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred.");
+            return StatusCode(StatusCodes.Status500InternalServerError, ErrorResponse.FromMessage("An unexpected error occurred."));
         }
         finally
         {
@@ -60,8 +61,8 @@ public class UsersController : ControllerBase
     /// </summary>
     [HttpGet("me")]
     [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetSelf()
     {
         var sw = Stopwatch.StartNew();
@@ -76,7 +77,7 @@ public class UsersController : ControllerBase
             if (user == null)
             {
                 _metrics.IncrementClientError();
-                return NotFound();
+                return NotFound(ErrorResponse.FromMessage("User not found."));
             }
 
             _metrics.IncrementRequestSuccess();
@@ -88,7 +89,7 @@ public class UsersController : ControllerBase
             _metrics.IncrementServerError();
             _metrics.IncrementRequestFailure();
 
-            return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred.");
+            return StatusCode(StatusCodes.Status500InternalServerError, ErrorResponse.FromMessage("An unexpected error occurred."));
         }
         finally
         {

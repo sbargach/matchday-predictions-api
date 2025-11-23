@@ -25,7 +25,7 @@ public sealed class PredictionDataContext : SqlDataContextBase, IPredictionDataC
     {
         return ExecuteAsync(
             "MatchDayPredictionsApi_SetPrediction",
-            conn => conn.ExecuteAsync(
+            (conn, timeout) => conn.ExecuteAsync(
                 "MatchDayPredictionsApi_SetPrediction",
                 new
                 {
@@ -34,17 +34,18 @@ public sealed class PredictionDataContext : SqlDataContextBase, IPredictionDataC
                     request.HomeGoals,
                     request.AwayGoals
                 },
-                commandType: CommandType.StoredProcedure));
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: timeout));
     }
 
     public Task<MatchPrediction?> GetPredictionAsync(int matchId, int userId)
     {
         return QueryAsync(
             "MatchDayPredictionsApi_GetPrediction",
-            conn => conn.QuerySingleOrDefaultAsync<MatchPrediction>(
+            (conn, timeout) => conn.QuerySingleOrDefaultAsync<MatchPrediction>(
                 "MatchDayPredictionsApi_GetPrediction",
                 new { MatchId = matchId, UserId = userId },
-                commandType: CommandType.StoredProcedure));
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: timeout));
     }
 }
-

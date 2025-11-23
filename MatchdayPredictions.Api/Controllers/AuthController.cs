@@ -9,12 +9,14 @@ using MatchdayPredictions.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 
 namespace MatchdayPredictions.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
+[ApiVersion("1.0")]
 [AllowAnonymous]
 public class AuthController : ControllerBase
 {
@@ -36,9 +38,11 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [EnableRateLimiting("login")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status429TooManyRequests)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var sw = Stopwatch.StartNew();
@@ -53,10 +57,7 @@ public class AuthController : ControllerBase
                 _metrics.IncrementClientError();
                 _metrics.IncrementRequestFailure();
 
-                return Unauthorized(new
-                {
-                    error = "Invalid username or password."
-                });
+                return Unauthorized(ErrorResponse.FromMessage("Invalid username or password."));
             }
 
             var claims = new[]
@@ -90,7 +91,7 @@ public class AuthController : ControllerBase
             _metrics.IncrementRequestFailure();
 
             return StatusCode(StatusCodes.Status500InternalServerError,
-                "An unexpected error occurred during login.");
+                ErrorResponse.FromMessage("An unexpected error occurred during login."));
         }
         finally
         {
@@ -98,4 +99,3 @@ public class AuthController : ControllerBase
         }
     }
 }
-

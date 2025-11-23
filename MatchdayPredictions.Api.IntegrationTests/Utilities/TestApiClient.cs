@@ -6,12 +6,15 @@ namespace MatchdayPredictions.Api.IntegrationTests.Utilities;
 
 public sealed class TestApiClient
 {
+    private const string BasePath = "/api/v1";
     private readonly HttpClient _client;
 
     public TestApiClient(HttpClient client)
     {
         _client = client;
     }
+
+    public HttpClient HttpClient => _client;
 
     public Task<HttpResponseMessage> GetAsync(string url)
         => _client.GetAsync(url);
@@ -20,28 +23,26 @@ public sealed class TestApiClient
         => _client.PostAsJsonAsync(url, payload);
 
     public Task<HttpResponseMessage> RegisterUserAsync(CreateUserRequest request)
-        => _client.PostAsJsonAsync("/api/users", request);
+        => _client.PostAsJsonAsync($"{BasePath}/users", request);
 
     public async Task<LoginResult?> LoginAsync(string username, string password)
+        => await LoginRawAsync(username, password) is { IsSuccessStatusCode: true } response
+            ? await response.Content.ReadFromJsonAsync<LoginResult>()
+            : null;
+
+    public Task<HttpResponseMessage> LoginRawAsync(string username, string password)
     {
-        var response = await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest
+        return _client.PostAsJsonAsync($"{BasePath}/auth/login", new LoginRequest
         {
             Username = username,
             Password = password
         });
-
-        if (!response.IsSuccessStatusCode)
-        {
-            return null;
-        }
-
-        return await response.Content.ReadFromJsonAsync<LoginResult>();
     }
 
     public async Task<User?> GetCurrentUserAsync(string token)
     {
         using var _ = ApplyBearer(token);
-        var response = await _client.GetAsync("/api/users/me");
+        var response = await _client.GetAsync($"{BasePath}/users/me");
         if (!response.IsSuccessStatusCode)
         {
             return null;

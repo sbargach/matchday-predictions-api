@@ -10,7 +10,8 @@ using System.Security.Claims;
 namespace MatchdayPredictions.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
+[ApiVersion("1.0")]
 [Authorize]
 public class PredictionsController : ControllerBase
 {
@@ -33,8 +34,8 @@ public class PredictionsController : ControllerBase
     /// </summary>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> AddPrediction([FromBody] CreatePredictionRequest request)
     {
         var sw = Stopwatch.StartNew();
@@ -48,7 +49,8 @@ public class PredictionsController : ControllerBase
             if (currentUserId != request.UserId)
             {
                 _metrics.IncrementClientError();
-                return Forbid();
+                return StatusCode(StatusCodes.Status403Forbidden,
+                    ErrorResponse.FromMessage("You can only create predictions for your own user."));
             }
 
             await _repository.AddPredictionAsync(request);
@@ -66,10 +68,8 @@ public class PredictionsController : ControllerBase
             _metrics.IncrementServerError();
             _metrics.IncrementRequestFailure();
 
-            return StatusCode(StatusCodes.Status500InternalServerError, new
-            {
-                error = "An unexpected error occurred while processing the request."
-            });
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                ErrorResponse.FromMessage("An unexpected error occurred while processing the request."));
         }
         finally
         {
@@ -82,9 +82,9 @@ public class PredictionsController : ControllerBase
     /// </summary>
     [HttpGet("{matchId:int}")]
     [ProducesResponseType(typeof(MatchPrediction), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetPrediction([FromRoute] int matchId, [FromQuery] int userId)
     {
         var sw = Stopwatch.StartNew();
@@ -98,7 +98,8 @@ public class PredictionsController : ControllerBase
             if (currentUserId != userId)
             {
                 _metrics.IncrementClientError();
-                return Forbid();
+                return StatusCode(StatusCodes.Status403Forbidden,
+                    ErrorResponse.FromMessage("You can only view your own predictions."));
             }
 
             var prediction = await _repository.GetPredictionAsync(matchId, userId);
@@ -107,7 +108,7 @@ public class PredictionsController : ControllerBase
             {
                 _metrics.IncrementClientError();
                 _metrics.IncrementRequestFailure();
-                return NotFound();
+                return NotFound(ErrorResponse.FromMessage("Prediction not found."));
             }
 
             _metrics.IncrementRequestSuccess();
@@ -121,10 +122,8 @@ public class PredictionsController : ControllerBase
             _metrics.IncrementServerError();
             _metrics.IncrementRequestFailure();
 
-            return StatusCode(StatusCodes.Status500InternalServerError, new
-            {
-                error = "An unexpected error occurred while retrieving the prediction."
-            });
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                ErrorResponse.FromMessage("An unexpected error occurred while retrieving the prediction."));
         }
         finally
         {

@@ -60,6 +60,7 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\tables" />
     <Folder Include="dbo\storedprocedures" />
+    <Folder Include="security" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\tables\Users.sql" />
@@ -75,6 +76,7 @@
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_GetMatchesByLeague.sql" />
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_SetPrediction.sql" />
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_GetPrediction.sql" />
+    <Build Include="security\matchdaypredictions_api.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CHANGELOG.md" />

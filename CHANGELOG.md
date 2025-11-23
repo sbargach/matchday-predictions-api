@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),  
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Released]
+
+## [1.0.0] - 2025-11-22
+### Added
+- API versioning (`/api/v1`), Swagger bearer security docs, and SQL health check endpoint `/health`.
+- Consistent error responses (`ErrorResponse`) for validation.
+- Login rate limiting
+
 ## [Unreleased]
 
 ## [0.16.1] - 2025-11-16

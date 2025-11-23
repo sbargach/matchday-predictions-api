@@ -9,7 +9,8 @@ using System.Diagnostics;
 namespace MatchdayPredictions.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
+[ApiVersion("1.0")]
 [Authorize]
 public class LeaguesController : ControllerBase
 {
@@ -29,7 +30,7 @@ public class LeaguesController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<League>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAll()
     {
         var sw = Stopwatch.StartNew();
@@ -48,10 +49,8 @@ public class LeaguesController : ControllerBase
             _metrics.IncrementServerError();
             _metrics.IncrementRequestFailure();
 
-            return StatusCode(StatusCodes.Status500InternalServerError, new
-            {
-                error = "An unexpected error occurred while retrieving the leagues."
-            });
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                ErrorResponse.FromMessage("An unexpected error occurred while retrieving the leagues."));
         }
         finally
         {
@@ -61,8 +60,8 @@ public class LeaguesController : ControllerBase
 
     [HttpGet("{leagueId:int}")]
     [ProducesResponseType(typeof(League), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetById(int leagueId)
     {
         var sw = Stopwatch.StartNew();
@@ -76,7 +75,7 @@ public class LeaguesController : ControllerBase
             {
                 _metrics.IncrementClientError();
                 _metrics.IncrementRequestFailure();
-                return NotFound();
+                return NotFound(ErrorResponse.FromMessage("League not found."));
             }
 
             _metrics.IncrementRequestSuccess();
@@ -89,10 +88,8 @@ public class LeaguesController : ControllerBase
             _metrics.IncrementServerError();
             _metrics.IncrementRequestFailure();
 
-            return StatusCode(StatusCodes.Status500InternalServerError, new
-            {
-                error = "An unexpected error occurred while retrieving the league."
-            });
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                ErrorResponse.FromMessage("An unexpected error occurred while retrieving the league."));
         }
         finally
         {
@@ -100,4 +97,3 @@ public class LeaguesController : ControllerBase
         }
     }
 }
-

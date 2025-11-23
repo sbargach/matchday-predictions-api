@@ -24,19 +24,20 @@ public sealed class LeagueDataContext : SqlDataContextBase, ILeagueDataContext
     {
         return QueryListAsync(
             "MatchDayPredictionsApi_GetLeagues",
-            conn => conn.QueryAsync<League>(
+            (conn, timeout) => conn.QueryAsync<League>(
                 "MatchDayPredictionsApi_GetLeagues",
-                commandType: CommandType.StoredProcedure));
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: timeout));
     }
 
     public Task<League?> GetLeagueByIdAsync(int leagueId)
     {
         return QueryAsync(
             "MatchDayPredictionsApi_GetLeagueById",
-            conn => conn.QuerySingleOrDefaultAsync<League>(
+            (conn, timeout) => conn.QuerySingleOrDefaultAsync<League>(
                 "MatchDayPredictionsApi_GetLeagueById",
                 new { LeagueId = leagueId },
-                commandType: CommandType.StoredProcedure));
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: timeout));
     }
 }
-

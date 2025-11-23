@@ -33,7 +33,7 @@ public class MatchesAndPredictionsTests
         using var _ = api.ApplyBearer(manager.Token);
 
         var kickoff = TestClock.TruncateToSecond(DateTime.UtcNow.AddHours(1));
-        var createResponse = await api.PostJsonAsync("/api/matches", new CreateMatchRequest
+        var createResponse = await api.PostJsonAsync("/api/v1/matches", new CreateMatchRequest
         {
             LeagueId = leagueId,
             HomeTeam = "Arsenal",
@@ -45,7 +45,7 @@ public class MatchesAndPredictionsTests
 
         var matchId = await seeder.GetMatchIdAsync(leagueId, "Arsenal", "Chelsea", kickoff);
 
-        var getResponse = await api.GetAsync($"/api/matches/{matchId}");
+        var getResponse = await api.GetAsync($"/api/v1/matches/{matchId}");
         getResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var match = await getResponse.Content.ReadFromJsonAsync<Match>();
@@ -55,11 +55,22 @@ public class MatchesAndPredictionsTests
         match.HomeTeam.Should().Be("Arsenal");
         match.AwayTeam.Should().Be("Chelsea");
 
-        var listResponse = await api.GetAsync($"/api/matches?leagueId={leagueId}");
+        var listResponse = await api.GetAsync($"/api/v1/matches?leagueId={leagueId}");
         listResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var matches = await listResponse.Content.ReadFromJsonAsync<List<Match>>();
         matches.Should().ContainSingle(m => m.MatchId == matchId);
+    }
+
+    [Fact]
+    public async Task Matches_requires_authentication()
+    {
+        await _fixture.ResetDatabaseAsync();
+
+        var response = await new TestApiClient(_fixture.CreateClient())
+            .GetAsync("/api/v1/matches?leagueId=1");
+
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
     [Fact]
@@ -78,7 +89,7 @@ public class MatchesAndPredictionsTests
 
         using var _ = api.ApplyBearer(userOne.Token);
 
-        var forbiddenResponse = await api.PostJsonAsync("/api/predictions", new CreatePredictionRequest
+        var forbiddenResponse = await api.PostJsonAsync("/api/v1/predictions", new CreatePredictionRequest
         {
             MatchId = matchId,
             UserId = userTwo.Profile.Id,
@@ -88,7 +99,7 @@ public class MatchesAndPredictionsTests
 
         forbiddenResponse.StatusCode.Should().Be(HttpStatusCode.Forbidden);
 
-        var createdResponse = await api.PostJsonAsync("/api/predictions", new CreatePredictionRequest
+        var createdResponse = await api.PostJsonAsync("/api/v1/predictions", new CreatePredictionRequest
         {
             MatchId = matchId,
             UserId = userOne.Profile.Id,
@@ -98,7 +109,7 @@ public class MatchesAndPredictionsTests
 
         createdResponse.StatusCode.Should().Be(HttpStatusCode.Created);
 
-        var getResponse = await api.GetAsync($"/api/predictions/{matchId}?userId={userOne.Profile.Id}");
+        var getResponse = await api.GetAsync($"/api/v1/predictions/{matchId}?userId={userOne.Profile.Id}");
         getResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var prediction = await getResponse.Content.ReadFromJsonAsync<MatchPrediction>();
@@ -109,4 +120,32 @@ public class MatchesAndPredictionsTests
         prediction.AwayGoals.Should().Be(1);
     }
 
+    [Fact]
+    public async Task Create_match_with_invalid_body_returns_validation_error()
+    {
+        await _fixture.ResetDatabaseAsync();
+
+        var api = new TestApiClient(_fixture.CreateClient());
+        var manager = await api.CreateUserAndLoginAsync("manager");
+
+        using var _ = api.ApplyBearer(manager.Token);
+
+        var response = await api.PostJsonAsync("/api/v1/matches", new CreateMatchRequest
+        {
+            LeagueId = 0,
+            HomeTeam = "",
+            AwayTeam = "",
+            KickoffUtc = DateTime.MinValue
+        });
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+
+        var body = await response.Content.ReadFromJsonAsync<ValidationErrorResponse>();
+        body.Should().NotBeNull();
+        body!.Message.Should().Be("Validation failed");
+        body.Errors.Should().NotBeEmpty();
+    }
+
+    private sealed record ValidationErrorResponse(string Message, IEnumerable<ValidationError> Errors);
+    private sealed record ValidationError(string Field, IEnumerable<string> Errors);
 }
