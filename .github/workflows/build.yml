@@ -6,6 +6,10 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
 
     steps:
       - name: Checkout
@@ -35,4 +39,5 @@ jobs:
         if: always()
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          files: 'TestResults/*.trx'
+          files: '**/TestResults/*.trx'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
