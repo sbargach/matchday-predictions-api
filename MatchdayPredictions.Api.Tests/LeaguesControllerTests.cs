@@ -56,7 +56,8 @@ public class LeaguesControllerTests
 
         var result = await controller.GetById(42);
 
-        result.ShouldBeOfType<NotFoundResult>();
+        var notFound = result.ShouldBeOfType<NotFoundObjectResult>();
+        notFound.StatusCode.ShouldBe(StatusCodes.Status404NotFound);
 
         metrics.RequestCount.ShouldBe(1);
         metrics.ClientErrorCount.ShouldBe(1);

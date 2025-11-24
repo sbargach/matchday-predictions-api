@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="45215d1b-452b-4483-ba58-806c36de50f6" name="princ@PCSB2 2025-11-24 21:11:44" runUser="PCSB2\princ" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-11-24T21:11:44.0451508+01:00" queuing="2025-11-24T21:11:44.0451512+01:00" start="2025-11-24T21:11:25.4980319+01:00" finish="2025-11-24T21:11:49.6684760+01:00" />
+  <TestSettings name="default" id="999a85a5-a9ef-4d1b-87ec-f75ad160e538">
+    <Deployment runDeploymentRoot="princ_PCSB2_2025-11-24_21_11_44" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="9a63e446-43f6-4b79-bb01-2da4fd126f13" testId="9acb3310-2912-e67e-2b73-c58e27523748" testName="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests.Create_match_with_invalid_body_returns_validation_error" computerName="PCSB2" duration="00:00:00.3486342" startTime="2025-11-24T21:11:48.9803251+01:00" endTime="2025-11-24T21:11:48.9803255+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9a63e446-43f6-4b79-bb01-2da4fd126f13" />
+    <UnitTestResult executionId="9d6c8b75-be5c-4d46-924e-4275e274ba2d" testId="9d73cf1a-9294-7f32-634f-fa9c579a2afe" testName="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests.Login_with_wrong_password_returns_unauthorized" computerName="PCSB2" duration="00:00:00.8575353" startTime="2025-11-24T21:11:44.8641398+01:00" endTime="2025-11-24T21:11:44.8641401+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9d6c8b75-be5c-4d46-924e-4275e274ba2d" />
+    <UnitTestResult executionId="331bd2f7-182c-41a8-af04-c6b22ab4ad30" testId="cabb8a27-ce95-6fec-0dba-00bf492ac678" testName="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests.Login_requests_exceeding_limit_are_rejected" computerName="PCSB2" duration="00:00:01.0679250" startTime="2025-11-24T21:11:46.5146439+01:00" endTime="2025-11-24T21:11:46.5146442+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="331bd2f7-182c-41a8-af04-c6b22ab4ad30">
+      <Output>
+        <StdOut>Configured permit limit: 5&#xD;
+Rate limit statuses: OK=5, TooManyRequests=5</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="975ec08e-fa55-4ee7-8e08-7dfba70e2042" testId="e66b23e5-4a39-4691-8575-e20ab045aafb" testName="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests.Predictions_respect_user_guardrails" computerName="PCSB2" duration="00:00:01.3253831" startTime="2025-11-24T21:11:47.8806357+01:00" endTime="2025-11-24T21:11:47.8806362+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="975ec08e-fa55-4ee7-8e08-7dfba70e2042" />
+    <UnitTestResult executionId="9704f527-2138-4744-83f1-8ee66f8ec03e" testId="b2306954-6919-845d-1dbf-f374f14a8ab0" testName="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests.Matches_requires_authentication" computerName="PCSB2" duration="00:00:00.0346176" startTime="2025-11-24T21:11:46.5528353+01:00" endTime="2025-11-24T21:11:46.5528356+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9704f527-2138-4744-83f1-8ee66f8ec03e" />
+    <UnitTestResult executionId="78ee4759-abd6-4ab3-ac5c-17f0c58a09b4" testId="dde36121-bc10-166b-1dda-718cae7b2048" testName="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests.Register_login_and_read_profile" computerName="PCSB2" duration="00:00:00.5810822" startTime="2025-11-24T21:11:45.4458336+01:00" endTime="2025-11-24T21:11:45.4458340+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="78ee4759-abd6-4ab3-ac5c-17f0c58a09b4" />
+    <UnitTestResult executionId="629f9dd7-a4a5-4025-bb7e-432e3e0dcbcc" testId="6d5a7a6f-e544-cc4c-dd10-0cf519acdd25" testName="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests.Get_profile_without_token_returns_unauthorized" computerName="PCSB2" duration="00:00:01.5656454" startTime="2025-11-24T21:11:44.0040557+01:00" endTime="2025-11-24T21:11:44.0040948+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="629f9dd7-a4a5-4025-bb7e-432e3e0dcbcc" />
+    <UnitTestResult executionId="77ff5e9e-7863-4f30-bce8-439f43550ee2" testId="6a70036e-ffec-3f41-c23c-9f126d371b5b" testName="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests.Matches_can_be_created_and_fetched" computerName="PCSB2" duration="00:00:00.7492692" startTime="2025-11-24T21:11:48.6308016+01:00" endTime="2025-11-24T21:11:48.6308019+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="77ff5e9e-7863-4f30-bce8-439f43550ee2" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests.Create_match_with_invalid_body_returns_validation_error" storage="c:\users\princ\documents\github\matchday-predictions-api\matchdaypredictions.api.integrationtests\bin\release\net10.0\matchdaypredictions.api.integrationtests.dll" id="9acb3310-2912-e67e-2b73-c58e27523748">
+      <Execution id="9a63e446-43f6-4b79-bb01-2da4fd126f13" />
+      <TestMethod codeBase="C:\Users\princ\Documents\GitHub\matchday-predictions-api\MatchdayPredictions.Api.IntegrationTests\bin\Release\net10.0\MatchdayPredictions.Api.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests" name="Create_match_with_invalid_body_returns_validation_error" />
+    </UnitTest>
+    <UnitTest name="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests.Login_requests_exceeding_limit_are_rejected" storage="c:\users\princ\documents\github\matchday-predictions-api\matchdaypredictions.api.integrationtests\bin\release\net10.0\matchdaypredictions.api.integrationtests.dll" id="cabb8a27-ce95-6fec-0dba-00bf492ac678">
+      <Execution id="331bd2f7-182c-41a8-af04-c6b22ab4ad30" />
+      <TestMethod codeBase="C:\Users\princ\Documents\GitHub\matchday-predictions-api\MatchdayPredictions.Api.IntegrationTests\bin\Release\net10.0\MatchdayPredictions.Api.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests" name="Login_requests_exceeding_limit_are_rejected" />
+    </UnitTest>
+    <UnitTest name="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests.Predictions_respect_user_guardrails" storage="c:\users\princ\documents\github\matchday-predictions-api\matchdaypredictions.api.integrationtests\bin\release\net10.0\matchdaypredictions.api.integrationtests.dll" id="e66b23e5-4a39-4691-8575-e20ab045aafb">
+      <Execution id="975ec08e-fa55-4ee7-8e08-7dfba70e2042" />
+      <TestMethod codeBase="C:\Users\princ\Documents\GitHub\matchday-predictions-api\MatchdayPredictions.Api.IntegrationTests\bin\Release\net10.0\MatchdayPredictions.Api.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests" name="Predictions_respect_user_guardrails" />
+    </UnitTest>
+    <UnitTest name="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests.Register_login_and_read_profile" storage="c:\users\princ\documents\github\matchday-predictions-api\matchdaypredictions.api.integrationtests\bin\release\net10.0\matchdaypredictions.api.integrationtests.dll" id="dde36121-bc10-166b-1dda-718cae7b2048">
+      <Execution id="78ee4759-abd6-4ab3-ac5c-17f0c58a09b4" />
+      <TestMethod codeBase="C:\Users\princ\Documents\GitHub\matchday-predictions-api\MatchdayPredictions.Api.IntegrationTests\bin\Release\net10.0\MatchdayPredictions.Api.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests" name="Register_login_and_read_profile" />
+    </UnitTest>
+    <UnitTest name="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests.Get_profile_without_token_returns_unauthorized" storage="c:\users\princ\documents\github\matchday-predictions-api\matchdaypredictions.api.integrationtests\bin\release\net10.0\matchdaypredictions.api.integrationtests.dll" id="6d5a7a6f-e544-cc4c-dd10-0cf519acdd25">
+      <Execution id="629f9dd7-a4a5-4025-bb7e-432e3e0dcbcc" />
+      <TestMethod codeBase="C:\Users\princ\Documents\GitHub\matchday-predictions-api\MatchdayPredictions.Api.IntegrationTests\bin\Release\net10.0\MatchdayPredictions.Api.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests" name="Get_profile_without_token_returns_unauthorized" />
+    </UnitTest>
+    <UnitTest name="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests.Matches_requires_authentication" storage="c:\users\princ\documents\github\matchday-predictions-api\matchdaypredictions.api.integrationtests\bin\release\net10.0\matchdaypredictions.api.integrationtests.dll" id="b2306954-6919-845d-1dbf-f374f14a8ab0">
+      <Execution id="9704f527-2138-4744-83f1-8ee66f8ec03e" />
+      <TestMethod codeBase="C:\Users\princ\Documents\GitHub\matchday-predictions-api\MatchdayPredictions.Api.IntegrationTests\bin\Release\net10.0\MatchdayPredictions.Api.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests" name="Matches_requires_authentication" />
+    </UnitTest>
+    <UnitTest name="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests.Matches_can_be_created_and_fetched" storage="c:\users\princ\documents\github\matchday-predictions-api\matchdaypredictions.api.integrationtests\bin\release\net10.0\matchdaypredictions.api.integrationtests.dll" id="6a70036e-ffec-3f41-c23c-9f126d371b5b">
+      <Execution id="77ff5e9e-7863-4f30-bce8-439f43550ee2" />
+      <TestMethod codeBase="C:\Users\princ\Documents\GitHub\matchday-predictions-api\MatchdayPredictions.Api.IntegrationTests\bin\Release\net10.0\MatchdayPredictions.Api.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="MatchdayPredictions.Api.IntegrationTests.MatchesAndPredictionsTests" name="Matches_can_be_created_and_fetched" />
+    </UnitTest>
+    <UnitTest name="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests.Login_with_wrong_password_returns_unauthorized" storage="c:\users\princ\documents\github\matchday-predictions-api\matchdaypredictions.api.integrationtests\bin\release\net10.0\matchdaypredictions.api.integrationtests.dll" id="9d73cf1a-9294-7f32-634f-fa9c579a2afe">
+      <Execution id="9d6c8b75-be5c-4d46-924e-4275e274ba2d" />
+      <TestMethod codeBase="C:\Users\princ\Documents\GitHub\matchday-predictions-api\MatchdayPredictions.Api.IntegrationTests\bin\Release\net10.0\MatchdayPredictions.Api.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="MatchdayPredictions.Api.IntegrationTests.AuthAndUsersTests" name="Login_with_wrong_password_returns_unauthorized" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="9acb3310-2912-e67e-2b73-c58e27523748" executionId="9a63e446-43f6-4b79-bb01-2da4fd126f13" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9d73cf1a-9294-7f32-634f-fa9c579a2afe" executionId="9d6c8b75-be5c-4d46-924e-4275e274ba2d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cabb8a27-ce95-6fec-0dba-00bf492ac678" executionId="331bd2f7-182c-41a8-af04-c6b22ab4ad30" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e66b23e5-4a39-4691-8575-e20ab045aafb" executionId="975ec08e-fa55-4ee7-8e08-7dfba70e2042" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b2306954-6919-845d-1dbf-f374f14a8ab0" executionId="9704f527-2138-4744-83f1-8ee66f8ec03e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dde36121-bc10-166b-1dda-718cae7b2048" executionId="78ee4759-abd6-4ab3-ac5c-17f0c58a09b4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6d5a7a6f-e544-cc4c-dd10-0cf519acdd25" executionId="629f9dd7-a4a5-4025-bb7e-432e3e0dcbcc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6a70036e-ffec-3f41-c23c-9f126d371b5b" executionId="77ff5e9e-7863-4f30-bce8-439f43550ee2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="8" executed="8" passed="8" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.0)&#xD;
+[xUnit.net 00:00:00.15]   Discovering: MatchdayPredictions.Api.IntegrationTests&#xD;
+[xUnit.net 00:00:00.20]   Discovered:  MatchdayPredictions.Api.IntegrationTests&#xD;
+[xUnit.net 00:00:00.21]   Starting:    MatchdayPredictions.Api.IntegrationTests&#xD;
+[testcontainers.org 00:00:00.16] Connected to Docker:&#xD;
+  Host: npipe://./pipe/docker_engine&#xD;
+  Server Version: 28.5.2&#xD;
+  Kernel Version: 6.6.87.2-microsoft-standard-WSL2&#xD;
+  API Version: 1.51&#xD;
+  Operating System: Docker Desktop&#xD;
+  Total Memory: 7.61 GB&#xD;
+[testcontainers.org 00:00:00.53] Docker container bebe7375e157 created&#xD;
+[testcontainers.org 00:00:00.65] Start Docker container bebe7375e157&#xD;
+[testcontainers.org 00:00:01.27] Wait for Docker container bebe7375e157 to complete readiness checks&#xD;
+[testcontainers.org 00:00:01.29] Docker container bebe7375e157 ready&#xD;
+[testcontainers.org 00:00:01.56] Docker container 7f1ea2b7e49b created&#xD;
+[testcontainers.org 00:00:01.64] Start Docker container 7f1ea2b7e49b&#xD;
+[testcontainers.org 00:00:02.21] Wait for Docker container 7f1ea2b7e49b to complete readiness checks&#xD;
+[testcontainers.org 00:00:02.26] Execute "/bin/sh -c /opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P "Str0ngP@ssw0rd!" -Q "SELECT 1"" at Docker container 7f1ea2b7e49b&#xD;
+[testcontainers.org 00:00:11.57] Execute "/bin/sh -c /opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P "Str0ngP@ssw0rd!" -Q "SELECT 1"" at Docker container 7f1ea2b7e49b&#xD;
+[testcontainers.org 00:00:14.41] Docker container 7f1ea2b7e49b ready&#xD;
+[21:11:42 INF]  Starting MatchdayPredictions.Api v1.0.0.0&#xD;
+[21:11:42 INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager User profile is available. Using 'C:\Users\princ\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/users - application/json; charset=utf-8 124&#xD;
+[21:11:43 WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Create", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(MatchdayPredictions.Api.Models.Api.CreateUserRequest) on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing CreatedAtActionResult, writing value of type 'MatchdayPredictions.Api.Models.Api.CreateUserRequest'.&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api) in 404.2845ms&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:43 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/users responded 201 in 493.4967 ms&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/users - 201 null application/json; charset=utf-8 523.1546ms&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 357.5315ms&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:43 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 200 in 368.7849 ms&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 370.3235ms&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/users/me - null null&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "GetSelf", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetSelf() on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Api.User'.&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api) in 30.3458ms&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:43 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/v1/users/me responded 200 in 69.0628 ms&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/users/me - 200 null application/json; charset=utf-8 70.4682ms&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/users/me - null null&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Authorization failed. These requirements were not met:&#xD;
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler AuthenticationScheme: Bearer was challenged.&#xD;
+[21:11:43 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/v1/users/me responded 401 in 5.6486 ms&#xD;
+[21:11:43 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/users/me - 401 null null 6.4024ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/users - application/json; charset=utf-8 124&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Create", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(MatchdayPredictions.Api.Models.Api.CreateUserRequest) on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing CreatedAtActionResult, writing value of type 'MatchdayPredictions.Api.Models.Api.CreateUserRequest'.&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api) in 270.9749ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:44 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/users responded 201 in 272.1371 ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/users - 201 null application/json; charset=utf-8 272.5025ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 290.1713ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:44 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 200 in 291.1525 ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 291.3739ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/users/me - null null&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "GetSelf", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetSelf() on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Api.User'.&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api) in 2.3731ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:44 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/v1/users/me responded 200 in 3.5737 ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/users/me - 200 null application/json; charset=utf-8 3.8675ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 66&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing UnauthorizedObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Api.ErrorResponse'.&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 267.5887ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:44 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 401 in 268.2679 ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 401 null application/json; charset=utf-8 268.5054ms&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/users - application/json; charset=utf-8 124&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:44 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Create", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(MatchdayPredictions.Api.Models.Api.CreateUserRequest) on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing CreatedAtActionResult, writing value of type 'MatchdayPredictions.Api.Models.Api.CreateUserRequest'.&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api) in 274.195ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/users responded 201 in 274.9950 ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/users - 201 null application/json; charset=utf-8 275.391ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 280.5901ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 200 in 281.3192 ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 281.8145ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/users/me - null null&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "GetSelf", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetSelf() on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Api.User'.&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api) in 2.5296ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/v1/users/me responded 200 in 4.2528 ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/users/me - 200 null application/json; charset=utf-8 4.7682ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/users/me - null null&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "GetSelf", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetSelf() on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Api.User'.&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api) in 2.1302ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/v1/users/me responded 200 in 2.8235 ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/users/me - 200 null application/json; charset=utf-8 3.0587ms&#xD;
+[21:11:45 INF]  Starting MatchdayPredictions.Api v1.0.0.0&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager User profile is available. Using 'C:\Users\princ\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/users - application/json; charset=utf-8 131&#xD;
+[21:11:45 WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Create", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(MatchdayPredictions.Api.Models.Api.CreateUserRequest) on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing CreatedAtActionResult, writing value of type 'MatchdayPredictions.Api.Models.Api.CreateUserRequest'.&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api) in 284.0667ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/users responded 201 in 297.1651 ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/users - 201 null application/json; charset=utf-8 300.0853ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:45 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 429 in 0.9779 ms&#xD;
+[21:11:45 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 429 in 3.6096 ms&#xD;
+[21:11:45 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 429 in 3.5908 ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 429 null application/json 1.4551ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 429 null application/json 12.1807ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 429 null application/json 12.6519ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:45 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 429 in 0.2606 ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 429 null application/json 0.4759ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:45 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 429 in 0.2936 ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 429 null application/json 0.7399ms&#xD;
+[21:11:45 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 293.5158ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:46 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 200 in 301.6272 ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 302.4233ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 297.2226ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:46 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 200 in 307.6243 ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 307.9116ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 300.116ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:46 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 200 in 310.9236 ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 311.2147ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 572.6972ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:46 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 200 in 593.5889 ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 594.5584ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 594.0372ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:46 INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/v1/auth/login responded 200 in 603.8637 ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 604.045ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/matches?leagueId=1 - null null&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Authorization failed. These requirements were not met:&#xD;
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/matches?leagueId=1 - 401 null null 20.4828ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/users - application/json; charset=utf-8 127&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Create", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(MatchdayPredictions.Api.Models.Api.CreateUserRequest) on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing CreatedAtActionResult, writing value of type 'MatchdayPredictions.Api.Models.Api.CreateUserRequest'.&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api) in 277.8067ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/users - 201 null application/json; charset=utf-8 279.3165ms&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:46 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 258.6213ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 259.6867ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/users/me - null null&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "GetSelf", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetSelf() on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Api.User'.&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api) in 2.4369ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/users/me - 200 null application/json; charset=utf-8 3.3439ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/users - application/json; charset=utf-8 127&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Create", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(MatchdayPredictions.Api.Models.Api.CreateUserRequest) on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing CreatedAtActionResult, writing value of type 'MatchdayPredictions.Api.Models.Api.CreateUserRequest'.&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api) in 289.9196ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/users - 201 null application/json; charset=utf-8 290.5286ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 279.6106ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 280.2586ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/users/me - null null&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "GetSelf", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetSelf() on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Api.User'.&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api) in 2.6877ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/users/me - 200 null application/json; charset=utf-8 3.7287ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/predictions - application/json; charset=utf-8 52&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.PredictionsController.AddPrediction (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "AddPrediction", controller = "Predictions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddPrediction(MatchdayPredictions.Api.Models.Api.CreatePredictionRequest) on controller MatchdayPredictions.Api.Controllers.PredictionsController (MatchdayPredictions.Api).&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing ObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Api.ErrorResponse'.&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.PredictionsController.AddPrediction (MatchdayPredictions.Api) in 4.0283ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.PredictionsController.AddPrediction (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/predictions - 403 null application/json; charset=utf-8 10.7883ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/predictions - application/json; charset=utf-8 52&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.PredictionsController.AddPrediction (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "AddPrediction", controller = "Predictions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddPrediction(MatchdayPredictions.Api.Models.Api.CreatePredictionRequest) on controller MatchdayPredictions.Api.Controllers.PredictionsController (MatchdayPredictions.Api).&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing CreatedAtActionResult, writing value of type 'MatchdayPredictions.Api.Models.Api.CreatePredictionRequest'.&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.PredictionsController.AddPrediction (MatchdayPredictions.Api) in 36.0095ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.PredictionsController.AddPrediction (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/predictions - 201 null application/json; charset=utf-8 36.8376ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/predictions/1?userId=5 - null null&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.PredictionsController.GetPrediction (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "GetPrediction", controller = "Predictions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetPrediction(Int32, Int32) on controller MatchdayPredictions.Api.Controllers.PredictionsController (MatchdayPredictions.Api).&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type 'MatchdayPredictions.Api.Models.MatchPrediction'.&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.PredictionsController.GetPrediction (MatchdayPredictions.Api) in 42.3326ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.PredictionsController.GetPrediction (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/predictions/1?userId=5 - 200 null application/json; charset=utf-8 51.7193ms&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/users - application/json; charset=utf-8 127&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:47 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Create", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(MatchdayPredictions.Api.Models.Api.CreateUserRequest) on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing CreatedAtActionResult, writing value of type 'MatchdayPredictions.Api.Models.Api.CreateUserRequest'.&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api) in 326.8203ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/users - 201 null application/json; charset=utf-8 327.6501ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 281.7563ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 282.8287ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/users/me - null null&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "GetSelf", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetSelf() on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Api.User'.&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api) in 2.65ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/users/me - 200 null application/json; charset=utf-8 3.8309ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/matches - application/json; charset=utf-8 92&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.MatchesController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Create", controller = "Matches"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(MatchdayPredictions.Api.Models.Api.CreateMatchRequest) on controller MatchdayPredictions.Api.Controllers.MatchesController (MatchdayPredictions.Api).&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing CreatedAtActionResult, writing value of type 'MatchdayPredictions.Api.Models.Api.CreateMatchRequest'.&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.MatchesController.Create (MatchdayPredictions.Api) in 17.5626ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.MatchesController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/matches - 201 null application/json; charset=utf-8 24.9771ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/matches/1 - null null&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.MatchesController.GetById (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "GetById", controller = "Matches"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetById(Int32) on controller MatchdayPredictions.Api.Controllers.MatchesController (MatchdayPredictions.Api).&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Match'.&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.MatchesController.GetById (MatchdayPredictions.Api) in 9.8893ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.MatchesController.GetById (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/matches/1 - 200 null application/json; charset=utf-8 17.8976ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/matches?leagueId=2 - null null&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.MatchesController.GetByLeague (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "GetByLeague", controller = "Matches"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetByLeague(Int32) on controller MatchdayPredictions.Api.Controllers.MatchesController (MatchdayPredictions.Api).&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MatchdayPredictions.Api.Models.Match, MatchdayPredictions.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.MatchesController.GetByLeague (MatchdayPredictions.Api) in 14.941ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.MatchesController.GetByLeague (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/matches?leagueId=2 - 200 null application/json; charset=utf-8 22.3641ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/users - application/json; charset=utf-8 127&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Create", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(MatchdayPredictions.Api.Models.Api.CreateUserRequest) on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing CreatedAtActionResult, writing value of type 'MatchdayPredictions.Api.Models.Api.CreateUserRequest'.&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api) in 145.8008ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/users - 201 null application/json; charset=utf-8 148.565ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/auth/login - application/json; charset=utf-8 62&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MatchdayPredictions.Api.Models.Api.LoginRequest) on controller MatchdayPredictions.Api.Controllers.AuthController (MatchdayPredictions.Api).&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type '&lt;&gt;f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api) in 159.6142ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.AuthController.Login (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 160.9664ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 GET http://localhost/api/v1/users/me - null null&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "GetSelf", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetSelf() on controller MatchdayPredictions.Api.Controllers.UsersController (MatchdayPredictions.Api).&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing OkObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Api.User'.&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api) in 2.3632ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.UsersController.GetSelf (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 GET http://localhost/api/v1/users/me - 200 null application/json; charset=utf-8 3.0417ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request starting HTTP/1.1 POST http://localhost/api/v1/matches - application/json; charset=utf-8 77&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executing endpoint 'MatchdayPredictions.Api.Controllers.MatchesController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Route matched with {action = "Create", controller = "Matches"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(MatchdayPredictions.Api.Models.Api.CreateMatchRequest) on controller MatchdayPredictions.Api.Controllers.MatchesController (MatchdayPredictions.Api).&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor Executing BadRequestObjectResult, writing value of type 'MatchdayPredictions.Api.Models.Api.ErrorResponse'.&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker Executed action MatchdayPredictions.Api.Controllers.MatchesController.Create (MatchdayPredictions.Api) in 8.1167ms&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Routing.EndpointMiddleware Executed endpoint 'MatchdayPredictions.Api.Controllers.MatchesController.Create (MatchdayPredictions.Api)'&#xD;
+[21:11:48 INF] Microsoft.AspNetCore.Hosting.Diagnostics Request finished HTTP/1.1 POST http://localhost/api/v1/matches - 400 null application/json; charset=utf-8 8.8111ms&#xD;
+[testcontainers.org 00:00:22.44] Delete Docker container 7f1ea2b7e49b&#xD;
+[xUnit.net 00:00:23.35]   Finished:    MatchdayPredictions.Api.IntegrationTests&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

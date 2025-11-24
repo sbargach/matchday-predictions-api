@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Released]
 
+## [1.0.1] - 2025-11-23
+### Changed
+- Simplified login rate limiting to a single middleware and kept integration test coverage aligned.
+
 ## [1.0.0] - 2025-11-22
 ### Added
 - API versioning (`/api/v1`), Swagger bearer security docs, and SQL health check endpoint `/health`.

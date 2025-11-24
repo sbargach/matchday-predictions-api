@@ -31,7 +31,8 @@ public class MatchesControllerTests
 
         var result = await controller.GetById(123);
 
-        result.ShouldBeOfType<NotFoundResult>();
+        var notFound = result.ShouldBeOfType<NotFoundObjectResult>();
+        notFound.StatusCode.ShouldBe(StatusCodes.Status404NotFound);
 
         metrics.RequestCount.ShouldBe(1);
         metrics.ClientErrorCount.ShouldBe(1);
@@ -121,7 +122,7 @@ public class MatchesControllerTests
         var result = await controller.GetByLeague(leagueId: 7);
 
         var okResult = result.ShouldBeOfType<OkObjectResult>();
-        var matches = okResult.Value.ShouldBeOfType<IEnumerable<Match>>();
+        var matches = okResult.Value.ShouldBeAssignableTo<IEnumerable<Match>>();
 
         matches.ShouldContain(m => m.MatchId == 1);
         matches.ShouldContain(m => m.MatchId == 2);

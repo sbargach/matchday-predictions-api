@@ -58,7 +58,8 @@ public class UsersControllerTests
 
         var result = await controller.GetSelf();
 
-        result.ShouldBeOfType<NotFoundResult>();
+        var notFound = result.ShouldBeOfType<NotFoundObjectResult>();
+        notFound.StatusCode.ShouldBe(StatusCodes.Status404NotFound);
     }
 
     [TestMethod]

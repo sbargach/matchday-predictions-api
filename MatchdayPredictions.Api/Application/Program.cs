@@ -7,7 +7,6 @@ using MatchdayPredictions.Api.Repositories;
 using MatchdayPredictions.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
@@ -18,10 +17,10 @@ using Microsoft.OpenApi.Models;
 using Prometheus;
 using Serilog;
 using Serilog.Events;
-using System.Threading.RateLimiting;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
+using MatchdayPredictions.Api.RateLimiting;
 
 public class Program
 {
@@ -227,30 +226,8 @@ public class Program
 
     private static void ConfigureRateLimiting(WebApplicationBuilder builder)
     {
-        builder.Services.AddRateLimiter(options =>
-        {
-            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
-            options.OnRejected = async (context, token) =>
-            {
-                if (context.HttpContext.Response.HasStarted)
-                {
-                    return;
-                }
-
-                context.HttpContext.Response.ContentType = "application/json";
-                var payload = System.Text.Json.JsonSerializer.Serialize(
-                    ErrorResponse.FromMessage("Too many requests. Please retry shortly."));
-                await context.HttpContext.Response.WriteAsync(payload, token);
-            };
-
-            options.AddFixedWindowLimiter("login", limiterOptions =>
-            {
-                limiterOptions.Window = TimeSpan.FromMinutes(1);
-                limiterOptions.PermitLimit = 10;
-                limiterOptions.QueueLimit = 2;
-                limiterOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-            });
-        });
+        builder.Services.Configure<LoginRateLimitOptions>(
+            builder.Configuration.GetSection("RateLimiting:Login"));
     }
 
     private static void ConfigureHealthChecks(WebApplicationBuilder builder)
@@ -280,7 +257,7 @@ public class Program
         app.UseRouting();
 
         app.UseHttpMetrics();
-        app.UseRateLimiter();
+        app.UseMiddleware<LoginRateLimitingMiddleware>();
 
         app.UseHttpsRedirection();
 

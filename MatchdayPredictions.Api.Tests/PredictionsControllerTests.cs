@@ -39,7 +39,8 @@ public class PredictionsControllerTests
         var result = await controller.AddPrediction(request);
 
         // Assert
-        result.ShouldBeOfType<ForbidResult>();
+        var forbidden = result.ShouldBeOfType<ObjectResult>();
+        forbidden.StatusCode.ShouldBe(StatusCodes.Status403Forbidden);
         repository.AddPredictionCalled.ShouldBeFalse();
     }
 
@@ -91,7 +92,8 @@ public class PredictionsControllerTests
 
         var result = await controller.GetPrediction(matchId: 7, userId: 4);
 
-        result.ShouldBeOfType<ForbidResult>();
+        var forbidden = result.ShouldBeOfType<ObjectResult>();
+        forbidden.StatusCode.ShouldBe(StatusCodes.Status403Forbidden);
         repository.GetPredictionCalled.ShouldBeFalse();
     }
 
@@ -115,7 +117,8 @@ public class PredictionsControllerTests
 
         var result = await controller.GetPrediction(matchId: 10, userId: 7);
 
-        result.ShouldBeOfType<NotFoundResult>();
+        var notFound = result.ShouldBeOfType<NotFoundObjectResult>();
+        notFound.StatusCode.ShouldBe(StatusCodes.Status404NotFound);
         repository.GetPredictionCalled.ShouldBeTrue();
     }
 

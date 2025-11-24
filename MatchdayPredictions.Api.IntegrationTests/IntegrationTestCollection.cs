@@ -4,6 +4,6 @@ using Xunit;
 namespace MatchdayPredictions.Api.IntegrationTests;
 
 [CollectionDefinition("integration-tests", DisableParallelization = true)]
-public class IntegrationTestCollection : ICollectionFixture<IntegrationTestFixture>
+public sealed class IntegrationTestCollection : ICollectionFixture<IntegrationTestFixture>
 {
 }
