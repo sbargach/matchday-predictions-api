@@ -63,6 +63,43 @@ public class MatchesAndPredictionsTests
     }
 
     [Fact]
+    public async Task Concurrent_match_creates_have_distinct_ids()
+    {
+        await _fixture.ResetDatabaseAsync();
+
+        var seeder = _fixture.CreateSeeder();
+        var firstLeague = await seeder.InsertLeagueAsync("First League", "ONE");
+        var secondLeague = await seeder.InsertLeagueAsync("Second League", "TWO");
+        var kickoff = TestClock.TruncateToSecond(DateTime.UtcNow.AddHours(1));
+
+        var api = new TestApiClient(_fixture.CreateClient());
+        var user = await api.CreateUserAndLoginAsync("manager");
+        using var _ = api.ApplyBearer(user.Token);
+
+        var responses = await Task.WhenAll(
+            api.PostJsonAsync("/api/v1/matches", new CreateMatchRequest
+            {
+                LeagueId = firstLeague,
+                HomeTeam = "Ajax",
+                AwayTeam = "PSV",
+                KickoffUtc = kickoff
+            }),
+            api.PostJsonAsync("/api/v1/matches", new CreateMatchRequest
+            {
+                LeagueId = secondLeague,
+                HomeTeam = "AZ",
+                AwayTeam = "Feyenoord",
+                KickoffUtc = kickoff
+            }));
+
+        responses.Should().OnlyContain(response => response.StatusCode == HttpStatusCode.Created);
+
+        var firstId = await seeder.GetMatchIdAsync(firstLeague, "Ajax", "PSV", kickoff);
+        var secondId = await seeder.GetMatchIdAsync(secondLeague, "AZ", "Feyenoord", kickoff);
+        firstId.Should().NotBe(secondId);
+    }
+
+    [Fact]
     public async Task Matches_requires_authentication()
     {
         await _fixture.ResetDatabaseAsync();
@@ -99,6 +136,8 @@ public class MatchesAndPredictionsTests
 
         forbiddenResponse.StatusCode.Should().Be(HttpStatusCode.Forbidden);
 
+        await seeder.InsertLeagueMemberAsync(leagueId, userOne.Profile.Id);
+
         var createdResponse = await api.PostJsonAsync("/api/v1/predictions", new CreatePredictionRequest
         {
             MatchId = matchId,
@@ -118,6 +157,52 @@ public class MatchesAndPredictionsTests
         prediction.MatchId.Should().Be(matchId);
         prediction.HomeGoals.Should().Be(2);
         prediction.AwayGoals.Should().Be(1);
+    }
+
+    [Fact]
+    public async Task Predictions_require_membership_and_close_at_kickoff()
+    {
+        await _fixture.ResetDatabaseAsync();
+
+        var seeder = _fixture.CreateSeeder();
+        var leagueId = await seeder.InsertLeagueAsync("Eredivisie", "NED");
+        var futureMatchId = await seeder.InsertMatchAsync(
+            leagueId, "Ajax", "PSV", TestClock.TruncateToSecond(DateTime.UtcNow.AddHours(1)));
+        var pastMatchId = await seeder.InsertMatchAsync(
+            leagueId, "Feyenoord", "AZ", TestClock.TruncateToSecond(DateTime.UtcNow.AddMinutes(-5)));
+
+        var api = new TestApiClient(_fixture.CreateClient());
+        var user = await api.CreateUserAndLoginAsync("predictor");
+        using var _ = api.ApplyBearer(user.Token);
+
+        var request = new CreatePredictionRequest
+        {
+            MatchId = futureMatchId,
+            UserId = user.Profile.Id,
+            HomeGoals = 2,
+            AwayGoals = 1
+        };
+
+        (await api.PostJsonAsync("/api/v1/predictions", request)).StatusCode
+            .Should().Be(HttpStatusCode.Forbidden);
+
+        await seeder.InsertLeagueMemberAsync(leagueId, user.Profile.Id);
+
+        (await api.PostJsonAsync("/api/v1/predictions", request)).StatusCode
+            .Should().Be(HttpStatusCode.Created);
+
+        (await api.PostJsonAsync("/api/v1/predictions", request with { HomeGoals = 3 })).StatusCode
+            .Should().Be(HttpStatusCode.OK);
+
+        var savedResponse = await api.GetAsync($"/api/v1/predictions/{futureMatchId}?userId={user.Profile.Id}");
+        var saved = await savedResponse.Content.ReadFromJsonAsync<MatchPrediction>();
+        saved!.HomeGoals.Should().Be(3);
+
+        (await api.PostJsonAsync("/api/v1/predictions", request with { MatchId = pastMatchId })).StatusCode
+            .Should().Be(HttpStatusCode.Conflict);
+
+        (await api.PostJsonAsync("/api/v1/predictions", request with { MatchId = int.MaxValue })).StatusCode
+            .Should().Be(HttpStatusCode.NotFound);
     }
 
     [Fact]

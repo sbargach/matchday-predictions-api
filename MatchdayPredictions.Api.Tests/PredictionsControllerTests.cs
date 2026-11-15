@@ -76,6 +76,41 @@ public class PredictionsControllerTests
     }
 
     [TestMethod]
+    public async Task AddPrediction_MapsWriteResultsToHttpResponses()
+    {
+        var cases = new[]
+        {
+            (PredictionWriteResult.Updated, StatusCodes.Status200OK),
+            (PredictionWriteResult.MatchNotFound, StatusCodes.Status404NotFound),
+            (PredictionWriteResult.MatchStarted, StatusCodes.Status409Conflict),
+            (PredictionWriteResult.NotLeagueMember, StatusCodes.Status403Forbidden)
+        };
+
+        foreach (var (writeResult, statusCode) in cases)
+        {
+            var repository = new FakePredictionRepository { WriteResult = writeResult };
+            var controller = new PredictionsController(
+                repository, new FakeMetricsProvider(), new FakeLogger<PredictionsController>())
+            {
+                ControllerContext = new ControllerContext
+                {
+                    HttpContext = CreateHttpContextWithUserId(userId: 5)
+                }
+            };
+
+            var result = await controller.AddPrediction(new CreatePredictionRequest
+            {
+                MatchId = 42,
+                UserId = 5,
+                HomeGoals = 2,
+                AwayGoals = 1
+            });
+
+            ((ObjectResult)result).StatusCode.ShouldBe(statusCode);
+        }
+    }
+
+    [TestMethod]
     public async Task GetPrediction_ForDifferentUser_ReturnsForbid()
     {
         var repository = new FakePredictionRepository();

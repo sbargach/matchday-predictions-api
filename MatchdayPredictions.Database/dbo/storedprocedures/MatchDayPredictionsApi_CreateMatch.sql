@@ -6,17 +6,20 @@ CREATE PROCEDURE dbo.MatchDayPredictionsApi_CreateMatch
 AS
 BEGIN
     SET NOCOUNT ON;
-    SET TRANSACTION ISOLATION LEVEL SNAPSHOT;
+    SET XACT_ABORT ON;
 
     DECLARE @NextMatchId INT;
 
-    -- Ensure MatchId is globally unique across all leagues
+    BEGIN TRANSACTION;
+
     SELECT @NextMatchId = ISNULL(MAX(MatchId), 0) + 1
-    FROM dbo.LeagueMatches;
+    FROM dbo.LeagueMatches WITH (TABLOCKX, HOLDLOCK);
 
     INSERT INTO dbo.LeagueMatches
         (LeagueId, MatchId, HomeTeam, AwayTeam, KickoffUtc)
     VALUES
         (@LeagueId, @NextMatchId, @HomeTeam, @AwayTeam, @KickoffUtc);
+
+    COMMIT TRANSACTION;
 END
 GO

@@ -11,7 +11,7 @@ namespace MatchdayPredictions.Api.Repositories.Interfaces
         /// <summary>
         /// Adds or updates a match prediction.
         /// </summary>
-        Task AddPredictionAsync(CreatePredictionRequest request);
+        Task<PredictionWriteResult> AddPredictionAsync(CreatePredictionRequest request);
 
         /// <summary>
         /// Gets a prediction for a specific match and user.

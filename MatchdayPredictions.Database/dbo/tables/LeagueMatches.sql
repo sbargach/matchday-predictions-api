@@ -7,6 +7,7 @@
     KickoffUtc DATETIME2(0)  NOT NULL,
 
     CONSTRAINT PK_LeagueMatches PRIMARY KEY (LeagueId, MatchId),
+    CONSTRAINT UQ_LeagueMatches_MatchId UNIQUE (MatchId),
     CONSTRAINT FK_LeagueMatches_League
         FOREIGN KEY (LeagueId) REFERENCES dbo.Leagues(Id) ON DELETE CASCADE
 );

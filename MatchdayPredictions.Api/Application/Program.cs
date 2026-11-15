@@ -49,6 +49,7 @@ public class Program
         catch (Exception ex)
         {
             Log.Fatal(ex, "Application start-up failed");
+            throw;
         }
         finally
         {
@@ -117,7 +118,7 @@ public class Program
             {
                 Version = "v1",
                 Title = "Matchday Predictions API",
-                Description = "Football match predictions with leagues and scoring."
+                Description = "Football matches and score predictions."
             });
 
             var securityScheme = new OpenApiSecurityScheme

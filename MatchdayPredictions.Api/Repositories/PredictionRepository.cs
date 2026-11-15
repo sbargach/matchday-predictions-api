@@ -17,7 +17,7 @@ public class PredictionRepository : IPredictionRepository
         _context = context;
     }
 
-    public Task AddPredictionAsync(CreatePredictionRequest request)
+    public Task<PredictionWriteResult> AddPredictionAsync(CreatePredictionRequest request)
         => _context.CreatePredictionAsync(request);
 
     public Task<MatchPrediction?> GetPredictionAsync(int matchId, int userId)

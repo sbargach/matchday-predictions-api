@@ -124,7 +124,7 @@ public class MatchesControllerTests
         var okResult = result.ShouldBeOfType<OkObjectResult>();
         var matches = okResult.Value.ShouldBeAssignableTo<IEnumerable<Match>>();
 
-        matches.ShouldContain(m => m.MatchId == 1);
-        matches.ShouldContain(m => m.MatchId == 2);
+        matches!.ShouldContain(m => m.MatchId == 1);
+        matches!.ShouldContain(m => m.MatchId == 2);
     }
 }

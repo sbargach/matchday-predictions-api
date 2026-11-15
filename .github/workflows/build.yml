@@ -16,11 +16,17 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Restore
-        run: dotnet restore MatchdayPredictions.Api/MatchdayPredictions.Api.csproj
+      - name: Restore unit tests
+        run: dotnet restore MatchdayPredictions.Api.Tests/MatchdayPredictions.Api.Tests.csproj
 
-      - name: Build
-        run: dotnet build MatchdayPredictions.Api/MatchdayPredictions.Api.csproj --no-restore --configuration Release
+      - name: Restore integration tests
+        run: dotnet restore MatchdayPredictions.Api.IntegrationTests/MatchdayPredictions.Api.IntegrationTests.csproj
+
+      - name: Build unit tests
+        run: dotnet build MatchdayPredictions.Api.Tests/MatchdayPredictions.Api.Tests.csproj --no-restore --configuration Release
+
+      - name: Build integration tests
+        run: dotnet build MatchdayPredictions.Api.IntegrationTests/MatchdayPredictions.Api.IntegrationTests.csproj --no-restore --configuration Release
 
       - name: Pre-pull SQL Server image
         run: docker pull mcr.microsoft.com/mssql/server:2022-latest
@@ -29,7 +35,7 @@ jobs:
         run: dotnet test MatchdayPredictions.Api.Tests/MatchdayPredictions.Api.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=unit-tests.trx" --results-directory TestResults
 
       - name: Test (integration)
-        run: dotnet test MatchdayPredictions.Api.IntegrationTests/MatchdayPredictions.Api.IntegrationTests.csproj --configuration Release --logger "trx;LogFileName=integration-tests.trx" --results-directory TestResults
+        run: dotnet test MatchdayPredictions.Api.IntegrationTests/MatchdayPredictions.Api.IntegrationTests.csproj --no-build --configuration Release --logger "trx;LogFileName=integration-tests.trx" --results-directory TestResults
 
       - name: Publish test results
         if: always()

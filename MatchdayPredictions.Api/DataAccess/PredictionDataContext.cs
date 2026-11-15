@@ -21,21 +21,34 @@ public sealed class PredictionDataContext : SqlDataContextBase, IPredictionDataC
     {
     }
 
-    public Task CreatePredictionAsync(CreatePredictionRequest request)
+    public Task<PredictionWriteResult> CreatePredictionAsync(CreatePredictionRequest request)
     {
-        return ExecuteAsync(
+        return QueryAsync(
             "MatchDayPredictionsApi_SetPrediction",
-            (conn, timeout) => conn.ExecuteAsync(
-                "MatchDayPredictionsApi_SetPrediction",
-                new
+            async (conn, timeout) =>
+            {
+                var status = await conn.QuerySingleAsync<string>(
+                    "MatchDayPredictionsApi_SetPrediction",
+                    new
+                    {
+                        request.MatchId,
+                        request.UserId,
+                        request.HomeGoals,
+                        request.AwayGoals
+                    },
+                    commandType: CommandType.StoredProcedure,
+                    commandTimeout: timeout);
+
+                return status switch
                 {
-                    request.MatchId,
-                    request.UserId,
-                    request.HomeGoals,
-                    request.AwayGoals
-                },
-                commandType: CommandType.StoredProcedure,
-                commandTimeout: timeout));
+                    "Created" => PredictionWriteResult.Created,
+                    "Updated" => PredictionWriteResult.Updated,
+                    "MatchNotFound" => PredictionWriteResult.MatchNotFound,
+                    "MatchStarted" => PredictionWriteResult.MatchStarted,
+                    "NotLeagueMember" => PredictionWriteResult.NotLeagueMember,
+                    _ => throw new InvalidOperationException($"Unexpected prediction result: {status}.")
+                };
+            });
     }
 
     public Task<MatchPrediction?> GetPredictionAsync(int matchId, int userId)

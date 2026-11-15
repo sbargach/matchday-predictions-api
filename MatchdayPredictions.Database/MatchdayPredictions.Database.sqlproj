@@ -22,7 +22,7 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <DacVersion>0.5.0.0</DacVersion>
+    <DacVersion>0.5.1.0</DacVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -60,11 +60,13 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\tables" />
     <Folder Include="dbo\storedprocedures" />
-    <Folder Include="security" />
+    <Folder Include="dbo\security" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\tables\Users.sql" />
     <Build Include="dbo\tables\Leagues.sql" />
+    <Build Include="dbo\tables\LeagueMatches.sql" />
+    <Build Include="dbo\tables\Predictions.sql" />
     <Build Include="dbo\tables\LeagueMembers.sql" />
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_CreateUser.sql" />
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_GetUserById.sql" />
@@ -76,11 +78,9 @@
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_GetMatchesByLeague.sql" />
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_SetPrediction.sql" />
     <Build Include="dbo\storedprocedures\MatchDayPredictionsApi_GetPrediction.sql" />
-    <Build Include="security\matchdaypredictions_api.sql" />
+    <Build Include="dbo\security\matchdaypredictions_api.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CHANGELOG.md" />
-    <None Include="dbo\tables\LeagueMatches.sql" />
-    <None Include="dbo\tables\Predictions.sql" />
   </ItemGroup>
 </Project>

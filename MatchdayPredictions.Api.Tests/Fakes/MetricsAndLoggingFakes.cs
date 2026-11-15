@@ -23,7 +23,7 @@ internal sealed class FakeMetricsProvider : IMetricsProvider
 
 internal sealed class FakeLogger<T> : ILogger<T>
 {
-    public IDisposable BeginScope<TState>(TState state) => NullScope.Instance;
+    public IDisposable BeginScope<TState>(TState state) where TState : notnull => NullScope.Instance;
 
     public bool IsEnabled(LogLevel logLevel) => false;
 

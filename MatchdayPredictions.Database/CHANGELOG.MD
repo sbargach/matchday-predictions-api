@@ -3,6 +3,12 @@ This project follows Keep a Changelog and Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-11-15
+### Fixed
+- Enforced globally unique match IDs during concurrent creation.
+- Rejected predictions after kickoff and for users outside the match's league.
+- Included missing table and security scripts in the database build.
+
 ## [0.5.0] - 2025-11-15
 ### Changed
 - Removed unused stored procedures not referenced by the API.

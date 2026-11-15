@@ -10,12 +10,13 @@ internal sealed class FakePredictionRepository : IPredictionRepository
     public bool GetPredictionCalled { get; private set; }
     public CreatePredictionRequest? LastRequest { get; private set; }
     public MatchPrediction? PredictionToReturn { get; set; }
+    public PredictionWriteResult WriteResult { get; set; } = PredictionWriteResult.Created;
 
-    public Task AddPredictionAsync(CreatePredictionRequest request)
+    public Task<PredictionWriteResult> AddPredictionAsync(CreatePredictionRequest request)
     {
         AddPredictionCalled = true;
         LastRequest = request;
-        return Task.CompletedTask;
+        return Task.FromResult(WriteResult);
     }
 
     public Task<MatchPrediction?> GetPredictionAsync(int matchId, int userId)

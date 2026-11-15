@@ -34,7 +34,10 @@ public class PredictionsController : ControllerBase
     /// </summary>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> AddPrediction([FromBody] CreatePredictionRequest request)
     {
@@ -49,16 +52,37 @@ public class PredictionsController : ControllerBase
             if (currentUserId != request.UserId)
             {
                 _metrics.IncrementClientError();
+                _metrics.IncrementRequestFailure();
                 return StatusCode(StatusCodes.Status403Forbidden,
                     ErrorResponse.FromMessage("You can only create predictions for your own user."));
             }
 
-            await _repository.AddPredictionAsync(request);
-            _metrics.IncrementRequestSuccess();
-
-            return CreatedAtAction(nameof(GetPrediction),
-                new { matchId = request.MatchId, userId = request.UserId },
-                request);
+            var result = await _repository.AddPredictionAsync(request);
+            switch (result)
+            {
+                case PredictionWriteResult.Created:
+                    _metrics.IncrementRequestSuccess();
+                    return CreatedAtAction(nameof(GetPrediction),
+                        new { matchId = request.MatchId, userId = request.UserId }, request);
+                case PredictionWriteResult.Updated:
+                    _metrics.IncrementRequestSuccess();
+                    return Ok(request);
+                case PredictionWriteResult.MatchNotFound:
+                    _metrics.IncrementClientError();
+                    _metrics.IncrementRequestFailure();
+                    return NotFound(ErrorResponse.FromMessage("Match not found."));
+                case PredictionWriteResult.MatchStarted:
+                    _metrics.IncrementClientError();
+                    _metrics.IncrementRequestFailure();
+                    return Conflict(ErrorResponse.FromMessage("Predictions close at kickoff."));
+                case PredictionWriteResult.NotLeagueMember:
+                    _metrics.IncrementClientError();
+                    _metrics.IncrementRequestFailure();
+                    return StatusCode(StatusCodes.Status403Forbidden,
+                        ErrorResponse.FromMessage("You must be a league member to predict this match."));
+                default:
+                    throw new InvalidOperationException($"Unexpected prediction result: {result}.");
+            }
         }
         catch (Exception ex)
         {

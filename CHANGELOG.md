@@ -4,7 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),  
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Released]
+## [Unreleased]
+
+## [1.0.2] - 2026-11-15
+### Fixed
+- Reject predictions for missing matches, non-members, and matches that have started.
+- Keep match IDs unique when matches are created concurrently.
+- Include the table and security scripts in the database project build.
+- Build both test projects before running them in CI.
+- Exit with a failure when the API cannot start.
+
+### Changed
+- Updated .NET 10, SQL client, telemetry, and test dependencies.
 
 ## [1.0.1] - 2025-11-23
 ### Changed
@@ -15,8 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - API versioning (`/api/v1`), Swagger bearer security docs, and SQL health check endpoint `/health`.
 - Consistent error responses (`ErrorResponse`) for validation.
 - Login rate limiting
-
-## [Unreleased]
 
 ## [0.16.1] - 2025-11-16
 ### Fixed

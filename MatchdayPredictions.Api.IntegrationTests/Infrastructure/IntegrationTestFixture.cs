@@ -21,8 +21,7 @@ public sealed class IntegrationTestFixture : IAsyncLifetime
     {
         var readinessCommand = $"/opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P \"{DatabasePassword}\" -Q \"SELECT 1\"";
 
-        _dbContainer = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+        _dbContainer = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest")
             .WithPassword(DatabasePassword)
             .WithEnvironment("ACCEPT_EULA", "Y")
             .WithWaitStrategy(Wait.ForUnixContainer()

@@ -63,6 +63,17 @@ public sealed class DatabaseSeeder
         return await connection.ExecuteScalarAsync<int>(selectSql, new { LeagueId = leagueId, HomeTeam = homeTeam, AwayTeam = awayTeam, KickoffUtc = kickoffUtc });
     }
 
+    public async Task InsertLeagueMemberAsync(int leagueId, int userId)
+    {
+        const string sql = """
+            INSERT INTO dbo.LeagueMembers (LeagueId, UserId, Joined)
+            VALUES (@LeagueId, @UserId, SYSUTCDATETIME());
+            """;
+
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.ExecuteAsync(sql, new { LeagueId = leagueId, UserId = userId });
+    }
+
     public async Task<int> GetMatchIdAsync(int leagueId, string homeTeam, string awayTeam, DateTime kickoffUtc)
     {
         const string sql = """
