@@ -35,3 +35,6 @@ packages/
 Thumbs.db
 MatchdayPredictions.Database/MatchdayPredictions.Database.jfm
 MatchdayPredictions.Database/MatchdayPredictions.Database.dbmdl
+
+# Generated test reports
+TestResults/
