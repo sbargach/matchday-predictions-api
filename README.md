@@ -1,6 +1,6 @@
 # Matchday Predictions API
 
-ASP.NET Core API for browsing leagues and matches and submitting score predictions. Users can register, sign in, and create or update their own predictions before kickoff.
+ASP.NET Core API for browsing football matches and submitting score predictions with friends before kickoff.
 
 ## Tech Stack
 - .NET 10 (ASP.NET Core controllers)
