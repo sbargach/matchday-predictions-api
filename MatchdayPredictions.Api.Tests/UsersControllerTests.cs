@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text.Json;
 using MatchdayPredictions.Api.Controllers;
 using MatchdayPredictions.Api.Models.Api;
 using MatchdayPredictions.Api.Repositories.Interfaces;
@@ -11,6 +12,23 @@ namespace MatchdayPredictions.Api.Tests.Controllers;
 [TestClass]
 public class UsersControllerTests
 {
+    [TestMethod]
+    public async Task Create_WhenUsernameExists_ReturnsConflict()
+    {
+        var repository = new CapturingUserRepository { CreateResult = false };
+        var controller = new UsersController(repository, new FakeMetricsProvider(), new FakeLogger<UsersController>());
+
+        var result = await controller.Create(new CreateUserRequest
+        {
+            Username = "taken",
+            DisplayName = "Taken",
+            Email = "taken@example.com",
+            Password = "Password1"
+        });
+
+        result.ShouldBeOfType<ConflictObjectResult>();
+    }
+
     [TestMethod]
     public async Task GetSelf_WhenUserExists_ReturnsUser()
     {
@@ -83,6 +101,7 @@ public class UsersControllerTests
 
         var createdResult = result.ShouldBeOfType<CreatedAtActionResult>();
         createdResult.ActionName.ShouldBe(nameof(UsersController.GetSelf));
+        JsonSerializer.Serialize(createdResult.Value).ShouldNotContain(request.Password);
 
         repository.CreateCalled.ShouldBeTrue();
         repository.LastRequest.ShouldNotBeNull();
@@ -105,13 +124,14 @@ public class UsersControllerTests
     private sealed class CapturingUserRepository : IUserRepository
     {
         public bool CreateCalled { get; private set; }
+        public bool CreateResult { get; set; } = true;
         public CreateUserRequest? LastRequest { get; private set; }
 
-        public Task CreateUserAsync(CreateUserRequest request)
+        public Task<bool> CreateUserAsync(CreateUserRequest request)
         {
             CreateCalled = true;
             LastRequest = request;
-            return Task.CompletedTask;
+            return Task.FromResult(CreateResult);
         }
 
         public Task<User?> GetUserByIdAsync(int userId)

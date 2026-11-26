@@ -117,13 +117,11 @@ public class MatchesController : ControllerBase
 
         try
         {
-            await _repository.CreateAsync(request);
+            var matchId = await _repository.CreateAsync(request);
 
             _metrics.IncrementRequestSuccess();
 
-            return CreatedAtAction(nameof(GetById),
-                new { matchId = 0 },
-                request);
+            return CreatedAtAction(nameof(GetById), new { matchId }, new { matchId });
         }
         catch (Exception ex)
         {

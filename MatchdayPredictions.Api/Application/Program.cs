@@ -60,7 +60,7 @@ public class Program
     private static void ConfigureLogging()
     {
         Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
             .Enrich.FromLogContext()
             .Enrich.WithEnvironmentUserName()
             .Enrich.WithMachineName()
@@ -260,7 +260,10 @@ public class Program
         app.UseHttpMetrics();
         app.UseMiddleware<LoginRateLimitingMiddleware>();
 
-        app.UseHttpsRedirection();
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseHttpsRedirection();
+        }
 
         app.UseAuthentication();
         app.UseAuthorization();

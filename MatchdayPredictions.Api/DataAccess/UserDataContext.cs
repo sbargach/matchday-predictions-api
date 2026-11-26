@@ -20,11 +20,11 @@ public sealed class UserDataContext : SqlDataContextBase, IUserDataContext
     {
     }
 
-    public Task CreateUserAsync(string username, string displayName, string email, string passwordHash)
+    public Task<bool> CreateUserAsync(string username, string displayName, string email, string passwordHash)
     {
-        return ExecuteAsync(
+        return QueryAsync(
             "MatchDayPredictionsApi_CreateUser",
-            (conn, timeout) => conn.ExecuteAsync(
+            (conn, timeout) => conn.QuerySingleAsync<bool>(
                 "MatchDayPredictionsApi_CreateUser",
                 new
                 {

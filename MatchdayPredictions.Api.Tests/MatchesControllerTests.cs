@@ -40,6 +40,26 @@ public class MatchesControllerTests
     }
 
     [TestMethod]
+    public async Task Create_ReturnsTheNewMatchId()
+    {
+        var repository = new FakeMatchRepository { CreatedMatchId = 42 };
+        var controller = CreateController(repository, out var _);
+        var request = new CreateMatchRequest
+        {
+            LeagueId = 7,
+            HomeTeam = "Ajax",
+            AwayTeam = "PSV",
+            KickoffUtc = DateTime.UtcNow.AddHours(1)
+        };
+
+        var result = await controller.Create(request);
+
+        var created = result.ShouldBeOfType<CreatedAtActionResult>();
+        created.RouteValues!["matchId"].ShouldBe(42);
+        repository.CreateCallCount.ShouldBe(1);
+    }
+
+    [TestMethod]
     public async Task Create_WhenRepositoryThrows_ReturnsServerErrorAndIncrementsServerErrorMetric()
     {
         var repository = new FakeMatchRepository

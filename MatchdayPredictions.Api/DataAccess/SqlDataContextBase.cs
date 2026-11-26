@@ -74,7 +74,7 @@ public abstract class SqlDataContextBase
     private AsyncRetryPolicy CreateRetryPolicy(MatchdayPredictionsSettings settings)
     {
         return Policy
-            .Handle<SqlException>()
+            .Handle<SqlException>(ex => ex.IsTransient)
             .Or<TimeoutException>()
             .WaitAndRetryAsync(
                 retryCount: settings.MaxRetryCount,

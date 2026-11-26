@@ -25,6 +25,28 @@ public class AuthAndUsersTests
     }
 
     [Fact]
+    public async Task Concurrent_registration_with_same_username_creates_one_user()
+    {
+        await _fixture.ResetDatabaseAsync();
+
+        var api = new TestApiClient(_fixture.CreateClient());
+        var request = new CreateUserRequest
+        {
+            Username = "same_user",
+            DisplayName = "Same User",
+            Email = "same@example.com",
+            Password = "Password1"
+        };
+
+        var responses = await Task.WhenAll(
+            api.RegisterUserAsync(request),
+            api.RegisterUserAsync(request));
+
+        responses.Select(response => response.StatusCode)
+            .Should().BeEquivalentTo(new[] { HttpStatusCode.Created, HttpStatusCode.Conflict });
+    }
+
+    [Fact]
     public async Task Register_login_and_read_profile()
     {
         await _fixture.ResetDatabaseAsync();

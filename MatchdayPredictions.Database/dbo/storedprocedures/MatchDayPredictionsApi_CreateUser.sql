@@ -6,13 +6,17 @@
 AS
 BEGIN
     SET NOCOUNT ON;
-    SET TRANSACTION ISOLATION LEVEL SNAPSHOT;
+    BEGIN TRY
+        INSERT INTO dbo.Users (UserName, DisplayName, Email, PasswordHash)
+        VALUES (@UserName, @DisplayName, @Email, @PasswordHash);
 
-    -- Prevent duplicate usernames / emails
-    IF EXISTS (SELECT 1 FROM dbo.Users WHERE UserName = @UserName OR Email = @Email)
-        RETURN;
-
-    INSERT INTO dbo.Users (UserName, DisplayName, Email, PasswordHash)
-    VALUES (@UserName, @DisplayName, @Email, @PasswordHash);
+        SELECT CAST(1 AS BIT) AS Created;
+    END TRY
+    BEGIN CATCH
+        IF ERROR_NUMBER() IN (2601, 2627)
+            SELECT CAST(0 AS BIT) AS Created;
+        ELSE
+            THROW;
+    END CATCH
 END
 GO

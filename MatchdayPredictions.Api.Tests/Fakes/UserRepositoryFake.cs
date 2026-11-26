@@ -12,7 +12,7 @@ internal sealed class FakeUserRepository : IUserRepository
         _user = user;
     }
 
-    public Task CreateUserAsync(CreateUserRequest request) => Task.CompletedTask;
+    public Task<bool> CreateUserAsync(CreateUserRequest request) => Task.FromResult(true);
 
     public Task<User?> GetUserByIdAsync(int userId) => Task.FromResult<User?>(_user);
 

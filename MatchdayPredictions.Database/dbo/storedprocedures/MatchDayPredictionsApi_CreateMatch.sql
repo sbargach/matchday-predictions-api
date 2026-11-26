@@ -21,5 +21,6 @@ BEGIN
         (@LeagueId, @NextMatchId, @HomeTeam, @AwayTeam, @KickoffUtc);
 
     COMMIT TRANSACTION;
+    SELECT @NextMatchId AS MatchId;
 END
 GO

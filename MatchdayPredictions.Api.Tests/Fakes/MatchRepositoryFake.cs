@@ -12,6 +12,7 @@ internal sealed class FakeMatchRepository : IMatchRepository
     public bool ThrowOnGetById { get; set; }
     public bool ThrowOnGetByLeague { get; set; }
     public bool ThrowOnCreate { get; set; }
+    public int CreatedMatchId { get; set; } = 42;
 
     public int GetByIdCallCount { get; private set; }
     public int GetByLeagueCallCount { get; private set; }
@@ -40,13 +41,13 @@ internal sealed class FakeMatchRepository : IMatchRepository
         return Task.FromResult(MatchesToReturn);
     }
 
-    public Task CreateAsync(CreateMatchRequest request)
+    public Task<int> CreateAsync(CreateMatchRequest request)
     {
         CreateCallCount++;
 
         ThrowIf(ThrowOnCreate, nameof(CreateAsync));
 
-        return Task.CompletedTask;
+        return Task.FromResult(CreatedMatchId);
     }
 
     private static void ThrowIf(bool condition, string operationName)

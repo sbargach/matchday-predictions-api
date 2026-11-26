@@ -42,8 +42,11 @@ public class MatchesAndPredictionsTests
         });
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
-
-        var matchId = await seeder.GetMatchIdAsync(leagueId, "Arsenal", "Chelsea", kickoff);
+        var created = await createResponse.Content.ReadFromJsonAsync<CreatedMatchResponse>();
+        created.Should().NotBeNull();
+        var matchId = created!.MatchId;
+        createResponse.Headers.Location?.AbsolutePath.ToLowerInvariant()
+            .Should().Be($"/api/v1/matches/{matchId}");
 
         var getResponse = await api.GetAsync($"/api/v1/matches/{matchId}");
         getResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -206,6 +209,38 @@ public class MatchesAndPredictionsTests
     }
 
     [Fact]
+    public async Task Concurrent_predictions_for_one_user_leave_one_row()
+    {
+        await _fixture.ResetDatabaseAsync();
+
+        var seeder = _fixture.CreateSeeder();
+        var leagueId = await seeder.InsertLeagueAsync("Eredivisie", "NED");
+        var matchId = await seeder.InsertMatchAsync(
+            leagueId, "Ajax", "PSV", TestClock.TruncateToSecond(DateTime.UtcNow.AddHours(1)));
+
+        var api = new TestApiClient(_fixture.CreateClient());
+        var user = await api.CreateUserAndLoginAsync("predictor");
+        await seeder.InsertLeagueMemberAsync(leagueId, user.Profile.Id);
+        using var _ = api.ApplyBearer(user.Token);
+
+        var request = new CreatePredictionRequest
+        {
+            MatchId = matchId,
+            UserId = user.Profile.Id,
+            HomeGoals = 2,
+            AwayGoals = 1
+        };
+
+        var responses = await Task.WhenAll(
+            api.PostJsonAsync("/api/v1/predictions", request),
+            api.PostJsonAsync("/api/v1/predictions", request));
+
+        responses.Select(response => response.StatusCode)
+            .Should().BeEquivalentTo(new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+        (await seeder.CountPredictionsAsync(matchId, user.Profile.Id)).Should().Be(1);
+    }
+
+    [Fact]
     public async Task Create_match_with_invalid_body_returns_validation_error()
     {
         await _fixture.ResetDatabaseAsync();
@@ -233,4 +268,5 @@ public class MatchesAndPredictionsTests
 
     private sealed record ValidationErrorResponse(string Message, IEnumerable<ValidationError> Errors);
     private sealed record ValidationError(string Field, IEnumerable<string> Errors);
+    private sealed record CreatedMatchResponse(int MatchId);
 }

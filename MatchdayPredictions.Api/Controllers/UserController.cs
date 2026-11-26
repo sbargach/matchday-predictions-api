@@ -29,6 +29,7 @@ public class UsersController : ControllerBase
     [AllowAnonymous]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
     {
@@ -37,10 +38,21 @@ public class UsersController : ControllerBase
 
         try
         {
-            await _repository.CreateUserAsync(request);
+            var created = await _repository.CreateUserAsync(request);
+
+            if (!created)
+            {
+                _metrics.IncrementClientError();
+                _metrics.IncrementRequestFailure();
+                return Conflict(ErrorResponse.FromMessage("Username or email already exists."));
+            }
 
             _metrics.IncrementRequestSuccess();
-            return CreatedAtAction(nameof(GetSelf), new { }, request);
+            return CreatedAtAction(nameof(GetSelf), new { }, new
+            {
+                request.Username,
+                request.DisplayName
+            });
         }
         catch (Exception ex)
         {

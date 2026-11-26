@@ -51,7 +51,8 @@ public sealed class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 ["Jwt:Audience"] = _jwtAudience,
                 ["Jwt:TokenHours"] = "2",
                 ["MatchdayPredictions:MaxRetryCount"] = "1",
-                ["MatchdayPredictions:RetryDelaySeconds"] = "0"
+                ["MatchdayPredictions:RetryDelaySeconds"] = "0",
+                ["RateLimiting:Login:PermitLimit"] = "1000"
             };
 
             if (_loginRateLimitSettings is not null)

@@ -62,13 +62,13 @@ public class UserRepositoryTests
         public string? Email { get; private set; }
         public string? PasswordHash { get; private set; }
 
-        public Task CreateUserAsync(string username, string displayName, string email, string passwordHash)
+        public Task<bool> CreateUserAsync(string username, string displayName, string email, string passwordHash)
         {
             Username = username;
             DisplayName = displayName;
             Email = email;
             PasswordHash = passwordHash;
-            return Task.CompletedTask;
+            return Task.FromResult(true);
         }
 
         public Task<User?> GetUserByIdAsync(int userId)

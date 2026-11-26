@@ -9,6 +9,6 @@ public interface IMatchDataContext
 
     Task<IEnumerable<Match>> GetMatchesByLeagueAsync(int leagueId);
 
-    Task CreateMatchAsync(CreateMatchRequest request);
+    Task<int> CreateMatchAsync(CreateMatchRequest request);
 }
 

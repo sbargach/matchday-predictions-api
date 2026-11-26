@@ -96,4 +96,12 @@ public sealed class DatabaseSeeder
         await using var connection = new SqlConnection(_connectionString);
         return await connection.ExecuteScalarAsync<int>(sql, new { Username = username });
     }
+
+    public async Task<int> CountPredictionsAsync(int matchId, int userId)
+    {
+        const string sql = "SELECT COUNT(*) FROM dbo.Predictions WHERE MatchId = @MatchId AND UserId = @UserId;";
+
+        await using var connection = new SqlConnection(_connectionString);
+        return await connection.ExecuteScalarAsync<int>(sql, new { MatchId = matchId, UserId = userId });
+    }
 }

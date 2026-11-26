@@ -1,91 +1,33 @@
 # Matchday Predictions API
 
-ASP.NET Core API for browsing football matches and submitting score predictions with friends before kickoff.
+I made this to try a small football predictions app with .NET, SQL Server, and Dapper. People can sign in, browse fixtures, and change their score prediction until kickoff. There is no frontend; Swagger is enough for now.
 
-## Tech Stack
-- .NET 10 (ASP.NET Core controllers)
-- SQL Server + Dapper data access (stored procedures)
-- JWT bearer authentication (BCrypt password hashing)
-- OpenTelemetry metrics + Prometheus
-- Serilog structured logging
+## Try it
 
-## Authentication & Authorization
-The API uses stateless JWT bearer tokens.
+You need Docker. Run this from the repo root:
 
-1. **Register** (anonymous)  
-   `POST /api/v1/users`
+```sh
+docker compose up --build -d
+pwsh ./scripts/smoke.ps1
+```
 
-   Body:
-   ```json
-   {
-     "username": "jane.doe",
-     "displayName": "Jane",
-     "email": "jane@example.com",
-     "password": "P@ssw0rd!"
-   }
-   ```
+The API is at [localhost:8081/swagger](http://localhost:8081/swagger). The demo login is `demo` / `Demo12345`. The seeded Eredivisie league has one match a week in the future. The smoke script signs in, reads the league and match, creates another match, makes and updates a prediction, and checks that a new user cannot predict in a league they have not joined.
 
-2. **Login** (anonymous)  
-   `POST /api/v1/auth/login`
+The Docker passwords are only for this local demo. To reset its database, run `docker compose down -v` and start it again.
 
-   Body:
-   ```json
-   {
-     "username": "jane.doe",
-     "password": "P@ssw0rd!"
-   }
-   ```
+## What I wanted to get right
 
-   Response:
-   ```json
-   {
-     "token": "<jwt-token>"
-   }
-   ```
+The prediction cutoff and league membership check happen in the SQL transaction that writes the prediction. The database has a primary key on `(LeagueId, MatchId, UserId)`, so two requests cannot create duplicate predictions. Match creation returns the ID from the database; the API uses it in the `Location` header.
 
-3. **Authenticated requests**  
-   Send the token in the `Authorization` header:
+I used stored procedures with Dapper because the writes are small but the rules sit close to the data. The API maps the result to HTTP responses. I have not added indexes just to make the schema look busy. If the data grows, I would start with the actual query plan and logical reads for the league match list and prediction write, then tune what is slow.
 
-   ```http
-   Authorization: Bearer <jwt-token>
-   ```
+Any signed-in user can currently add a match. That is fine for this experiment, but a real league would need an owner or admin rule. League joining and automatic scoring are not built yet.
 
-   The API uses the `NameIdentifier` claim as the current user id to enforce:
-   - `GET /api/v1/users/me` — current user profile
-   - `POST /api/v1/predictions` — submit only for your own user id and a league you belong to
-   - `GET /api/v1/predictions/{matchId}?userId=...` — only retrieve your own predictions
+## Tests
 
-League membership is stored in SQL Server. The API does not yet provide league joining or score calculation.
+```sh
+dotnet test MatchdayPredictions.Api.Tests/MatchdayPredictions.Api.Tests.csproj
+dotnet test MatchdayPredictions.Api.IntegrationTests/MatchdayPredictions.Api.IntegrationTests.csproj
+```
 
-## Main Endpoints (v1)
-
-- **Auth & Users**
-  - `POST /api/v1/users` — create a user (anonymous)
-  - `GET /api/v1/users/me` — get current authenticated user
-  - `POST /api/v1/auth/login` — obtain JWT token (rate limited)
-
-- **Leagues**
-  - `GET /api/v1/leagues` — list leagues
-  - `GET /api/v1/leagues/{leagueId}` — league details
-
-- **Matches**
-  - `GET /api/v1/matches?leagueId={leagueId}` — matches for a league
-  - `GET /api/v1/matches/{matchId}` — match details
-  - `POST /api/v1/matches` — create a match (authenticated)
-
-- **Predictions**
-  - `POST /api/v1/predictions` — create a prediction (`201`) or update one (`200`) before kickoff; missing matches return `404`, non-members `403`, and closed matches `409`
-  - `GET /api/v1/predictions/{matchId}?userId={userId}` — get prediction for a match/user
-
-## Observability & Docs
-- OpenTelemetry (metrics) + Prometheus endpoint at `/metrics`
-- Health check at `/health`
-- Swagger UI enabled in Development at `/swagger`
-- Serilog console logging
-
-## Running locally
-- API: `dotnet run --project MatchdayPredictions.Api/MatchdayPredictions.Api.csproj`
-- Unit tests: `dotnet test MatchdayPredictions.Api.Tests/MatchdayPredictions.Api.Tests.csproj`
-- Integration tests: require Docker (SQL Server Testcontainer). Run `dotnet test MatchdayPredictions.Api.IntegrationTests/MatchdayPredictions.Api.IntegrationTests.csproj`
-
-The database project requires Visual Studio SSDT. CLI builds target the API and test projects directly; integration tests apply the SQL scripts to a temporary SQL Server container.
+The integration tests start SQL Server with Testcontainers and apply the database scripts. The Docker smoke script tests the running API and database together over HTTP.

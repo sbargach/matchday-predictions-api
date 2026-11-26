@@ -15,6 +15,6 @@ namespace MatchdayPredictions.Api.Repositories.Interfaces
         Task<IEnumerable<Match>> GetByLeagueAsync(int leagueId);
 
         /// <summary>Creates a new match.</summary>
-        Task CreateAsync(CreateMatchRequest request);
+        Task<int> CreateAsync(CreateMatchRequest request);
     }
 }

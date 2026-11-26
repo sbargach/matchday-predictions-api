@@ -11,7 +11,7 @@ namespace MatchdayPredictions.Api.Repositories.Interfaces
         /// Creates a new user in the database.
         /// </summary>
         /// <param name="request">The user details to insert.</param>
-        Task CreateUserAsync(CreateUserRequest request);
+        Task<bool> CreateUserAsync(CreateUserRequest request);
 
         /// <summary>
         /// Retrieves a specific user by ID.

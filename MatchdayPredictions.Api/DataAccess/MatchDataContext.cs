@@ -43,11 +43,11 @@ public sealed class MatchDataContext : SqlDataContextBase, IMatchDataContext
                 commandTimeout: timeout));
     }
 
-    public Task CreateMatchAsync(CreateMatchRequest request)
+    public Task<int> CreateMatchAsync(CreateMatchRequest request)
     {
-        return ExecuteAsync(
+        return QueryAsync(
             "MatchDayPredictionsApi_CreateMatch",
-            (conn, timeout) => conn.ExecuteAsync(
+            (conn, timeout) => conn.QuerySingleAsync<int>(
                 "MatchDayPredictionsApi_CreateMatch",
                 new
                 {

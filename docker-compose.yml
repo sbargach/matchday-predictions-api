@@ -1,0 +1,41 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: "LocalSql_12345!"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q 'SELECT 1' -b -o /dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    volumes:
+      - sql-data:/var/opt/mssql
+
+  db-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    entrypoint: ["/bin/bash", "/setup/init-db.sh"]
+    environment:
+      MSSQL_SA_PASSWORD: "LocalSql_12345!"
+    volumes:
+      - ./scripts:/setup:ro
+      - ./MatchdayPredictions.Database/dbo:/schema:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build: .
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__matchdaypredictions: "Server=db;Database=MatchdayPredictions;User ID=matchday_api;Password=LocalApi_12345!;TrustServerCertificate=True"
+    ports:
+      - "8081:8080"
+
+volumes:
+  sql-data:

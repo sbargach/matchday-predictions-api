@@ -23,7 +23,7 @@ public sealed class MatchRepository : IMatchRepository
     public Task<IEnumerable<Match>> GetByLeagueAsync(int leagueId)
         => _context.GetMatchesByLeagueAsync(leagueId);
 
-    public Task CreateAsync(CreateMatchRequest request)
+    public Task<int> CreateAsync(CreateMatchRequest request)
         => _context.CreateMatchAsync(request);
 }
 

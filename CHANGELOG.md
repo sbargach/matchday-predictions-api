@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-11-26
+### Fixed
+- Return the created match ID instead of pointing clients to match 0.
+- Keep the password out of the registration response.
+- Return a conflict when a username or email already exists, including concurrent registrations.
+- Retry transient SQL errors without retrying every database error.
+- Keep development HTTP logs readable when running without HTTPS.
+
+### Added
+- A local Docker setup with SQL Server, a demo league, and an API smoke test.
+- A real SQL Server test for concurrent predictions by the same user.
+
 ## [1.0.2] - 2026-11-15
 ### Fixed
 - Reject predictions for missing matches, non-members, and matches that have started.

@@ -13,14 +13,14 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task CreateUserAsync(CreateUserRequest request)
+    public async Task<bool> CreateUserAsync(CreateUserRequest request)
     {
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
         var displayName = string.IsNullOrWhiteSpace(request.DisplayName)
             ? request.Username
             : request.DisplayName;
 
-        await _context.CreateUserAsync(request.Username, displayName, request.Email, passwordHash);
+        return await _context.CreateUserAsync(request.Username, displayName, request.Email, passwordHash);
     }
 
     public Task<User?> GetByUsernameAsync(string username)
